@@ -1,0 +1,88 @@
+<project name="amtuDist" default="buildDist">
+
+	<property name="amtu_root" location="${basedir}/../"/>
+	<property name="workingDir" location="${basedir}/temp_working_dir"/>
+
+	<target name="init">
+		<mkdir dir="${workingDir}"/>
+		<tstamp>
+			<format property="TODAY" pattern="yyyy-MM-dd HH:mm"/>
+		</tstamp>
+	</target>
+
+	<target name="clean">
+		<delete dir="lib"/>
+		<delete dir="javadoc"/>
+		<delete dir="${workingDir}"/>
+	</target>
+
+	<target name="releaseVersion">
+		<property name="releaseVersion" value="true"/>
+		<property name="zipFilePrefix" value="ma_transport"/>
+		<property name="debugMode" value="off"/>
+		<!-- Turn debugMode to on for open-source distribution -->
+	</target>
+
+	<target name="_buildLatest">
+		<property name="debugMode" value="on"/>
+		<ant antfile="${amtu_root}/build.xml" 
+			target="clean" 
+			inheritAll="false"
+			dir="${amtu_root}">
+			<property name="debugMode" value="${debugMode}"/>
+		</ant>
+		<ant antfile="${amtu_root}/build.xml" 
+			target="archive" 
+			inheritAll="false"
+			dir="${amtu_root}">
+			<property name="debugMode" value="${debugMode}"/>
+		</ant>
+	</target>
+	
+	<target name="_copyLib">
+		<copy todir="${workingDir}">
+			<fileset dir="${amtu_root}\lib" includes="**/*.jar,**/*.war,**/*.zip"/>
+		</copy>
+	</target>
+	
+	<target name="_buildLib" depends="init,_buildLatest,_copyLib">
+		<mkdir dir="lib"/>
+		<copy todir="lib" flatten="true">
+			<fileset dir="${workingDir}" includes="**/*.jar" excludesfile="libexcludes.txt"/>
+		</copy>
+	</target>
+	
+	<target name="_buildData">
+		<mkdir dir="service/bin/data"/>
+		<copy todir="service/bin/data" flatten="true">
+			<fileset dir="${amtu_root}/data" includes="*"/>
+		</copy>
+	</target>
+	
+	<target name="_buildJavadoc">
+		<mkdir dir="javadoc"/>
+		<javadoc destdir="javadoc">
+			<fileset dir="${amtu_root}/src/com/amazon"/>
+		</javadoc>
+	</target>
+
+	<target name="buildDist" depends="init, _buildLib, _buildData, _buildJavadoc"/>
+	
+	<target name="_pruneDist">
+		<delete dir="bin/.results_store"/>
+		<delete>
+			<fileset dir="${basedir}">
+				<include name="**/*.log"/>
+				<include name="**/*.log.1"/>
+			</fileset>
+		</delete>
+		<delete dir="${workingDir}"/>
+	</target>
+
+	<target name="zipDist" depends="clean,buildDist,_pruneDist">
+		<property name="zipFilePrefix" value="ma_transport_debug"/>
+		<zip destfile="${zipFilePrefix}${DSTAMP}.zip"
+			basedir="."
+			excludes="${workingdir}/**, javadoc/**, build.xml, **/*.txt, **/*.zip"/>
+	</target>
+</project>

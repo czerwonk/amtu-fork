@@ -1,0 +1,11 @@
+<!DOCTYPE project [
+    <!ENTITY buildProperties SYSTEM "file:buildProperties.xml">
+    <!ENTITY standardBuild SYSTEM "file:standardBuild.xml">
+]>
+
+<project name="amtu" basedir="." default="archive">
+	<property name="requiresJar" value="true"/>
+
+	&buildProperties;
+	&standardBuild;
+</project>

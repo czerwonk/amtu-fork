@@ -1,0 +1,1 @@
+java -cp workspace/Galega/lib/hsqldb.jar org.hsqldb.Server -database workspace\Galega\data\amtuDb
