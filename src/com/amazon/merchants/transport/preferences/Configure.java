@@ -15,11 +15,16 @@ import com.amazon.merchants.util.interaction.TextMenuUtil;
 
 public class Configure
 {
-	public static void main(String[] args)
+    // for now, this is to get this to compile.  In the addormodifyaccount method,
+    // this flag probably shouldn't be used.  the existing prefs should be referenced, most likely
+    private static boolean isWS=false;
+
+    public static void main(String[] args)
 	{
 		Configure configure = new Configure();
 		boolean isAdvanced=false;
 		TransportPreferences preferences = TransportPreferences.instance();
+		System.out.println("Invoking Configure Utility");
 		if (args.length > 0 && args[0]!=null)
 		{
 			if ("-advanced".equals(args[0].trim()))
@@ -33,9 +38,14 @@ public class Configure
 				System.out.println("Registry items removed.");
 				return;
 			}
+			else if ("-ws".equals(args[0].trim())) // specifically for WS naik @10/25
+			{
+			    System.out.println("Configuring for WS.");
+			    isWS=true;
+			}
 		}
 	
-		System.out.println("Amazon Merchant Transport Tool Configuration Utility"+(isAdvanced?" Advanced Mode":""));
+		System.out.println("Amazon Merchant Transport Tool Configuration Utility v0.1"+(isAdvanced?" Advanced Mode":""));
 		System.out.println("----------------------------------------------------"+(isAdvanced?"--------------":""));
 		System.out.println();
 		System.out.println("Values in square brackets [] are defaults. To select these, just press Enter.");
@@ -78,6 +88,7 @@ public class Configure
 					addOrModifyAccount(config,TextMenuUtil.promptAndValidate("Enter a unique name for environment","production",InputTypeEnum.STRING),isAdvanced);
 				}
 			}
+			
 			else
 			{
 				addStandardAccounts(config);
@@ -109,6 +120,7 @@ public class Configure
 			options.add("View/Modify a configuration account");
 			options.add("Remove a configuration account");
 			options.add("Add a configuration account");
+			options.add("Add Amazon Web Servcies Information");
 			
 			switch(choice=TextMenuUtil.promptChoice("What would you like to do?",0,((String []) options.toArray(new String[0]))))
 			{
@@ -174,6 +186,10 @@ public class Configure
 			account.setUsername(TextMenuUtil.promptAndValidate("Enter your Amazon.com username for this account",account.getUsername()==null?"":account.getUsername(),InputTypeEnum.EMAIL));
 			// Merchant Password
 			String password = TextMenuUtil.promptAndValidate("Enter your Amazon.com password for this account","********",InputTypeEnum.STRING);
+			if (isWS) {
+			    account.setAccessKey(TextMenuUtil.promptAndValidate("Enter your Amazon Developer Access key",account.getAccessKey()==null?"":account.getAccessKey(),InputTypeEnum.STRING));
+			    account.setSecretAccessKey(TextMenuUtil.promptAndValidate("Enter your Amazon Developer Secret Access key",account.getSecretAccessKey()==null?"":account.getSecretAccessKey(),InputTypeEnum.STRING));
+			}
 			if (!"********".equals(password))
 			{
 				account.setPassword(password);

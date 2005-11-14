@@ -25,6 +25,8 @@ public class MerchantAccount implements Serializable
 	private String merchantName;
 	private String merchantURL;
 	private String environmentName;
+	private String accessKey;
+	private String secretAccessKey;
 	
 	/**
 	 * 
@@ -166,7 +168,7 @@ public class MerchantAccount implements Serializable
 		append(password).
 		append(token).
 		append(merchantName).
-		append(merchantURL).
+		append(merchantURL).append(accessKey).append(secretAccessKey).
 		toString();
 	}
 
@@ -177,6 +179,23 @@ public class MerchantAccount implements Serializable
 	{
 		return environmentName;
 	}
+	/**
+	 * @return
+	 */
+	public String getSecretAccessKey()
+	{
+		return secretAccessKey;
+	}
+	
+	/**
+	 * @return
+	 */
+	public String getAccessKey()
+	{
+		return accessKey;
+	}
+
+   
 
 	/**
 	 * @param string
@@ -185,5 +204,17 @@ public class MerchantAccount implements Serializable
 	{
 		environmentName = string;
 	}
-
+/**
+	 * @param string
+	 */
+	public void setAccessKey(String string)
+	{
+		accessKey = string;
+	}/**
+	 * @param string
+	 */
+	public void setSecretAccessKey(String string)
+	{
+		secretAccessKey = string;
+	}
 }
