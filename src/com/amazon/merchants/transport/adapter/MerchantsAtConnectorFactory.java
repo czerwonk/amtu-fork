@@ -7,7 +7,8 @@ package com.amazon.merchants.transport.adapter;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import com.amazon.merchants.transport.adapter.impl.MerchantsAtConnectorImpl;
+import com.amazon.merchants.transport.adapter.impl.MerchantsAtConnectorMGSImpl;
+import com.amazon.merchants.transport.adapter.impl.MerchantsAtConnectorAWSImpl;
 import com.amazon.merchants.transport.model.MerchantAccount;
 
 /**
@@ -37,7 +38,9 @@ public class MerchantsAtConnectorFactory
 		
 		if (connector==null)
 		{
-			connector = new MerchantsAtConnectorImpl(credentials);
+			connector = new MerchantsAtConnectorMGSImpl(credentials);
+			// add logic to determine which to add to hash map  ~swm
+            //connector = new MerchantsAtConnectorAWSIm pl(credentials);
 			instances.put(credentials.toString(),connector);
 		}
 		return connector;
