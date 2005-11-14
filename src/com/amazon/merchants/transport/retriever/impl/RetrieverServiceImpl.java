@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Properties;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.commons.logging.*;
@@ -46,12 +45,6 @@ public class RetrieverServiceImpl implements RetrieverService
 	}
 	
 	private static final Log log = LogFactory.getLog(RetrieverService.class);
-	private Properties retrieverProperties;
-	
-	private void setRetrieverProperties(Properties properties)
-	{
-		retrieverProperties = properties;
-	}
 	
 	public ProcessingReport getProcessingReport(
 		BatchReferenceIdentifier batchReference,
@@ -128,8 +121,16 @@ public class RetrieverServiceImpl implements RetrieverService
 						AuditLogger.instance().logSeriousError("Document id "+docIds[i].getId()+" could not be downloaded.",mex);
 					}
 				}
-				reportArray = (MerchantReport[])documents.toArray(new MerchantReport[0]);
-				connector.acknowledgeDocumentDownload(reportArray);
+				try
+				{
+					reportArray = (MerchantReport[])documents.toArray(new MerchantReport[0]);
+					connector.acknowledgeDocumentDownload(reportArray);
+				}
+				catch (MerchantsAtConnectorException mex)
+				{
+					// Log and continue - give each ACK a chance
+					AuditLogger.instance().logSeriousError("One or more documents could not be ACKed.",mex);
+				}
 			}
 		}
 		catch(MerchantsAtConnectorException mex)
@@ -187,8 +188,16 @@ public class RetrieverServiceImpl implements RetrieverService
 					AuditLogger.instance().logSeriousError("Batch reference "+batchReferences[i].getId()+" could not be updated in database.",pex);
 				}
 			}
-			reportArray = (ProcessingReport[])reports.toArray(new ProcessingReport[0]);
-			connector.acknowledgeDocumentDownload(reportArray);
+			try
+			{
+				reportArray = (ProcessingReport[])reports.toArray(new ProcessingReport[0]);
+				connector.acknowledgeDocumentDownload(reportArray);
+			}
+			catch (MerchantsAtConnectorException mex)
+			{
+				// Log and continue - give each ACK a chance
+				AuditLogger.instance().logSeriousError("One or more processing reports could not be ACKed.",mex);
+			}
 		}
 		catch (MerchantsAtConnectorException mex)
 		{
@@ -234,23 +243,30 @@ public class RetrieverServiceImpl implements RetrieverService
 
 	private void saveGenericReports(MerchantReport [] reports, File incomingDirectory, boolean flatFile)
 	{
+		
 		for (int i=0;i<reports.length;i++)
 		{
 			// Only save to file if a file exists to save
 			if (reports[i].getDocument()!=null)
 			{
-				boolean isProcessingReport=false;
+				String incomingPath = incomingDirectory.getAbsolutePath();
 				String reportId="";
 				if (reports[i] instanceof ProcessingReport)
 				{
 					// Name processing report by batch ref to make life easier
-					isProcessingReport = true;
 					reportId = Long.toString(((ProcessingReport)reports[i]).getBatchReference().getId());
 				}
 				else
 				{
 					reportId = reports[i].getDocumentId().getId();
 				}
+				
+				// Slightly alter the output path to indicate that this is an un-ACKed document
+				if(reports[i].getAcknowledgementStatus() != AmazonSoapReturnCodeEnum.SUCCESSFUL)
+				{
+					AuditLogger.instance().logSeriousError("Saving the noACKed document " + reports[i].getDocumentId().getId());
+					incomingPath += File.separator + "noack";
+				}			
 				
 				String fileName = new StringBuffer().
 								append(reports[i].getDocumentType().getName()).
@@ -260,7 +276,7 @@ public class RetrieverServiceImpl implements RetrieverService
 											   :TransportConstants.XML_FILE_SUFFIX).
 								toString();
 				
-				File savePath = new File(incomingDirectory.getAbsolutePath()+File.separator+fileName);
+				File savePath = new File(incomingPath+File.separator+fileName);
 				
 				try
 				{
