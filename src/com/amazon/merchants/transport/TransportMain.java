@@ -38,7 +38,13 @@ public class TransportMain
 		}
 		Properties log4jProps = new Properties();
 		log4jProps.load(new ConfigResource("log4j.properties").inputStream());
-		setupLogPaths(log4jProps);
+		
+		//Different log files based on monitor mode or not...
+		if(args[0].equalsIgnoreCase("monitor"))
+			setupLogPaths(log4jProps,"moni_");
+		else
+			setupLogPaths(log4jProps,"amtu_");
+			
 		PropertyConfigurator.configure(log4jProps);
 
 		if (args[0].equalsIgnoreCase("monitor"))
@@ -75,7 +81,7 @@ public class TransportMain
 		}
 	}
 
-	private static void setupLogPaths(Properties log4jProps)
+	private static void setupLogPaths(Properties log4jProps, String logNamePrefix)
 	{
 		// Override the existing setup
 		String rootDirectory = TransportPreferences.instance().getPreference(TransportPreferenceEnum.TRANSPORT_ROOT_FOLDER);
@@ -87,8 +93,41 @@ public class TransportMain
 		{
 			logDir.mkdirs();
 		}
-		log4jProps.put("log4j.appender.debugLog.File",logDirectory+"debug.log");
-		log4jProps.put("log4j.appender.auditLog.File",logDirectory+"audit.log");
-		log4jProps.put("log4j.appender.errorLog.File",logDirectory+"error.log");
+		String defDebug = logDirectory + logNamePrefix + "def_debug.log";
+		String defAudit = logDirectory + logNamePrefix + "def_audit.log";
+		String defError = logDirectory + logNamePrefix + "def_error.log";
+	    String curLog;
+		
+		//Only be explicit about the pathing if there is no pathing already specified
+		//in the existing properties file
+		curLog = log4jProps.getProperty("log4j.appender.debugLog.File");
+		if(curLog.length() > 0)
+		{
+			if(curLog.indexOf(File.separator) < 0)
+				curLog = logDirectory + logNamePrefix + curLog;
+		}
+		else
+			curLog = defDebug;
+		log4jProps.put("log4j.appender.debugLog.File",curLog);
+		
+		curLog = log4jProps.getProperty("log4j.appender.auditLog.File");
+		if(curLog.length() > 0)
+		{
+			if(curLog.indexOf(File.separator) < 0)
+				curLog =  logDirectory + logNamePrefix + curLog;
+		}
+		else
+			curLog = defAudit;
+		log4jProps.put("log4j.appender.auditLog.File",curLog);
+
+		curLog = log4jProps.getProperty("log4j.appender.errorLog.File");
+		if(curLog.length() > 0)
+		{
+			if(curLog.indexOf(File.separator) < 0)
+				curLog =  logDirectory + logNamePrefix + curLog;
+		}
+		else
+			curLog = defError;
+		log4jProps.put("log4j.appender.errorLog.File",curLog);
 	}
 }
