@@ -1,11 +1,101 @@
-<!DOCTYPE project [
-    <!ENTITY buildProperties SYSTEM "file:buildProperties.xml">
-    <!ENTITY standardBuild SYSTEM "file:standardBuild.xml">
-]>
+<project name="galega" basedir="." default="compile">
 
-<project name="amtu" basedir="." default="archive">
-	<property name="requiresJar" value="true"/>
+    <property file="build.properties"/>
 
-	&buildProperties;
-	&standardBuild;
+    <path id="compile.classpath">
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="_init">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${build.lib.dir}"/>
+        <mkdir dir="${classes.dir}"/>
+        <mkdir dir="${javadoc.dir}"/>
+        <tstamp>
+            <format property="TODAY" pattern="yyyy-MM-dd HH:mm"/>
+        </tstamp>
+    </target>
+
+    <target name="compile" depends="_init">
+        <javac destdir="${classes.dir}"
+               srcdir="${src.dir}"
+               debug="${compile.debug}"
+               fork="yes"
+               classpathref="compile.classpath"/>
+    </target>
+    
+    <target name="_copySourceForDebug"/>
+
+    <target name="jar" depends="compile, _copySourceForDebug">
+        <jar jarfile="${build.lib.dir}/${ant.project.name}.jar">
+            <fileset dir="${basedir}/" includes="resources/**/*"/>
+            <fileset dir="${classes.dir}"/>
+            <fileset dir="${src.dir}">
+                <include name="**/*.java"/>
+                <exclude name="**/CVS/"/>
+            </fileset>
+        </jar>
+    </target>
+
+    <target name="_copyLib" depends="_init">
+        <copy todir="${build.lib.dir}">
+            <fileset dir="${lib.dir}" includes="**/*.jar"/>
+        </copy>
+    </target>
+
+    <target name="javadoc" depends="_init">
+        <javadoc destdir="${javadoc.dir}">
+            <fileset dir="${src.dir}"/>
+        </javadoc>
+    </target>
+
+    <target name="_copyDist" depends="_init">
+        <copy todir="${build.dist.dir}">
+            <fileset dir="${dist.dir}">
+                <exclude name="**/*.txt"/> 
+                <exclude name="**/*.zip"/> 
+            </fileset>
+        </copy>
+        <copy todir="${build.dist.dir}">
+            <fileset dir="${os.installation.dir}"/>
+        </copy>
+    </target>
+
+    <target name="_assemble" depends="jar, _copyLib, _copyDist">
+        <mkdir dir="${assemble.dir}"/>
+        <copy todir="${assemble.dir}">
+            <fileset dir="${build.dir}">
+                <include name="lib/*.jar"/>
+            </fileset>
+        </copy>
+        <copy todir="${assemble.dir}">
+            <fileset dir="${build.dist.dir}"/>
+        </copy>
+    </target>
+
+    <target name="zip" depends="_assemble">
+        <zip destfile="${zip.file.prefix}-${DSTAMP}-${os.target}.zip"
+             basedir="${assemble.dir}"
+             excludes="${javadoc.dir}"/>
+    </target>
+
+    <target name="tgz" depends="_assemble">
+        <property name="tar.file.name" 
+                  value="${zip.file.prefix}-${DSTAMP}-${os.target}.tar"/>
+
+        <tar destfile="${tar.file.name}">
+            <tarfileset mode="775"
+                        dirmode="775"
+                        dir="${assemble.dir}"/>
+        </tar>
+        <gzip src="${tar.file.name}" destfile="${tar.file.name}.gz"/>
+        <delete file="${tar.file.name}"/>
+    </target>
+    
 </project>
