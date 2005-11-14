@@ -37,6 +37,8 @@ public class TransportConfiguration
 	private String monitorReceiveHost;
 	private String monitorSMTPServer;
 	private String monitorNotifyEmail;
+	private String accessKey;
+	private String secretAccessKey;
 
 	
 	public void addAccount(MerchantAccount account)
@@ -269,6 +271,27 @@ public class TransportConfiguration
 	public void setMonitorSMTPServer(String string)
 	{
 		monitorSMTPServer = string;
+	}
+	
+	/**
+	 * @return: 
+	 * @ pcn
+	 */
+	public String getaccessKey()
+	{
+		return accessKey;
+	}
+	public void setaccessKey (String accessKey)
+	{
+	    this.accessKey = accessKey;
+	}
+	public String getsecretAccessKey()
+	{
+		return secretAccessKey;
+	}
+	public void setsecretAccessKey (String accessKey)
+	{
+	    this.secretAccessKey = secretAccessKey;
 	}
 
 }
