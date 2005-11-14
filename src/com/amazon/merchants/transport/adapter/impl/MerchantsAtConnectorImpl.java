@@ -31,6 +31,7 @@ import com.amazon.merchants.util.file.IO;
  * 
  * @author hynoskij
  *
+ * @deprecated User MGS or AWS impl instead.
  */
 public class MerchantsAtConnectorImpl implements MerchantsAtConnector
 {
