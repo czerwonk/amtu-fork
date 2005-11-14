@@ -33,6 +33,8 @@ public class DocumentTypeEnum extends MerchantDocumentEnum  implements Serializa
 	public static final DocumentTypeEnum INVENTORY = new DocumentTypeEnum("INVENTORY","_POST_INVENTORY_AVAILABILITY_DATA_",50);
 	public static final DocumentTypeEnum ORDER_ACKNOWLEDGEMENT = new DocumentTypeEnum("ORDER_ACKNOWLEDGEMENT","_POST_ORDER_ACKNOWLEDGEMENT_DATA_",70);
 	public static final DocumentTypeEnum STORE = new DocumentTypeEnum("STORE","_POST_STORE_DATA_",200);
+    public static final DocumentTypeEnum ACES = new DocumentTypeEnum("ACES","_POST_ACES_DATA_",300);
+    public static final DocumentTypeEnum PIES = new DocumentTypeEnum("PIES","_POST_PIES_DATA_",400);
 	
 	private int feedPrecedence;
 
