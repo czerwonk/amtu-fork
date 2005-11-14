@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:ref="http://ws-i.org/profiles/basic/1.1/xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://xml.amazon.com/AWSMerchantService/2005-08-15" targetNamespace="http://xml.amazon.com/AWSMerchantService/2005-08-15">
+	<types>
+		<xs:schema>
+			<xs:import namespace="http://xml.amazon.com/AWSMerchantService/2005-08-15" schemaLocation="AWSMerchantService.xsd"/>
+		</xs:schema>
+	</types>
+	<message name="getMerchantInfoFromCustomerIDRequestMsg">
+		<part name="body" element="tns:getMerchantInfoFromCustomerID"/>
+	</message>
+	<message name="getMerchantInfoFromCustomerIDResponseMsg">
+		<part name="body" element="tns:getMerchantInfoFromCustomerIDResponse"/>
+	</message>
+	<message name="postDocumentRequestMsg">
+		<part name="body" element="tns:postDocument"/>
+		<part name="document" type="xs:base64Binary"/>
+	</message>
+	<message name="postDocumentResponseMsg">
+		<part name="body" element="tns:postDocumentResponse"/>
+	</message>
+	<message name="getDocumentRequestMsg">
+		<part name="body" element="tns:getDocument"/>
+	</message>
+	<message name="getDocumentResponseMsg">
+		<part name="body" element="tns:getDocumentResponse"/>
+		<part name="document" type="xs:base64Binary"/>
+	</message>
+	<message name="generateReportRequestMsg">
+		<part name="body" element="tns:generateReport"/>
+	</message>
+	<message name="generateReportResponseMsg">
+		<part name="body" element="tns:generateReportResponse"/>
+	</message>
+	<message name="getLastNDocumentInfoRequestMsg">
+		<part name="body" element="tns:getLastNDocumentInfo"/>
+	</message>
+	<message name="getLastNDocumentInfoResponseMsg">
+		<part name="body" element="tns:getLastNDocumentInfoResponse"/>
+	</message>
+	<message name="getDocumentInterfaceConformanceRequestMsg">
+		<part name="body" element="tns:getDocumentInterfaceConformance"/>
+	</message>
+	<message name="getDocumentInterfaceConformanceResponseMsg">
+		<part name="body" element="tns:getDocumentInterfaceConformanceResponse"/>
+		<part name="document" type="xs:base64Binary"/>
+	</message>
+	<message name="getLastNReportInfoRequestMsg">
+		<part name="body" element="tns:getLastNReportInfo"/>
+	</message>
+	<message name="getLastNReportInfoResponseMsg">
+		<part name="body" element="tns:getLastNReportInfoResponse"/>
+	</message>
+	<message name="getLastNDocumentProcessingStatusesRequestMsg">
+		<part name="body" element="tns:getLastNDocumentProcessingStatuses"/>
+	</message>
+	<message name="getLastNDocumentProcessingStatusesResponseMsg">
+		<part name="body" element="tns:getLastNDocumentProcessingStatusesResponse"/>
+	</message>
+	<message name="getAllPendingDocumentInfoRequestMsg">
+		<part name="body" element="tns:getAllPendingDocumentInfo"/>
+	</message>
+	<message name="getAllPendingDocumentInfoResponseMsg">
+		<part name="body" element="tns:getAllPendingDocumentInfoResponse"/>
+	</message>
+	<message name="getDocumentInfoListGivenTimeWindowRequestMsg">
+		<part name="body" element="tns:getDocumentInfoListGivenTimeWindow"/>
+	</message>
+	<message name="getDocumentInfoListGivenTimeWindowResponseMsg">
+		<part name="body" element="tns:getDocumentInfoListGivenTimeWindowResponse"/>
+	</message>
+	<message name="getLastNPendingDocumentInfoRequestMsg">
+		<part name="body" element="tns:getLastNPendingDocumentInfo"/>
+	</message>
+	<message name="getLastNPendingDocumentInfoResponseMsg">
+		<part name="body" element="tns:getLastNPendingDocumentInfoResponse"/>
+	</message>
+	<message name="postDocumentDownloadAckRequestMsg">
+		<part name="body" element="tns:postDocumentDownloadAck"/>
+	</message>
+	<message name="postDocumentDownloadAckResponseMsg">
+		<part name="body" element="tns:postDocumentDownloadAckResponse"/>
+	</message>
+	<message name="getDocumentProcessingStatusRequestMsg">
+		<part name="body" element="tns:getDocumentProcessingStatus"/>
+	</message>
+	<message name="getDocumentProcessingStatusResponseMsg">
+		<part name="body" element="tns:getDocumentProcessingStatusResponse"/>
+	</message>
+	<message name="postReportRequestMsg">
+		<part name="body" element="tns:postReport"/>
+		<part name="document" type="xs:base64Binary"/>
+	</message>
+	<message name="postReportResponseMsg">
+		<part name="body" element="tns:postReportResponse"/>
+	</message>
+	<message name="scheduleReportsRequestMsg">
+		<part name="body" element="tns:scheduleReports"/>
+	</message>
+	<message name="scheduleReportsResponseMsg">
+		<part name="body" element="tns:scheduleReportsResponse"/>
+	</message>
+	<message name="postDocumentConfirmationRequestMsg">
+		<part name="body" element="tns:postDocumentConfirmation"/>
+	</message>
+	<message name="postDocumentConfirmationResponseMsg">
+		<part name="body" element="tns:postDocumentConfirmationResponse"/>
+	</message>
+	<message name="postDocumentInterfaceConformanceRequestMsg">
+		<part name="body" element="tns:postDocumentInterfaceConformance"/>
+		<part name="document" type="xs:base64Binary"/>
+	</message>
+	<message name="postDocumentInterfaceConformanceResponseMsg">
+		<part name="body" element="tns:postDocumentInterfaceConformanceResponse"/>
+	</message>
+	<message name="postDocumentUnconfirmedRequestMsg">
+		<part name="body" element="tns:postDocumentUnconfirmed"/>
+		<part name="document" type="xs:base64Binary"/>
+	</message>
+	<message name="postDocumentUnconfirmedResponseMsg">
+		<part name="body" element="tns:postDocumentUnconfirmedResponse"/>
+	</message>
+	<message name="postDocumentUnconfirmedInterfaceConformanceRequestMsg">
+		<part name="body" element="tns:postDocumentUnconfirmedInterfaceConformance"/>
+		<part name="document" type="xs:base64Binary"/>
+	</message>
+	<message name="postDocumentUnconfirmedInterfaceConformanceResponseMsg">
+		<part name="body" element="tns:postDocumentUnconfirmedInterfaceConformanceResponse"/>
+	</message>
+	<message name="getPendingDocumentInfoListGivenTimeWindowRequestMsg">
+		<part name="body" element="tns:getPendingDocumentInfoListGivenTimeWindow"/>
+	</message>
+	<message name="getPendingDocumentInfoListGivenTimeWindowResponseMsg">
+		<part name="body" element="tns:getPendingDocumentInfoListGivenTimeWindowResponse"/>
+	</message>
+	<message name="getDocumentInfoInterfaceConformanceRequestMsg">
+		<part name="body" element="tns:getDocumentInfoInterfaceConformance"/>
+	</message>
+	<message name="getDocumentInfoInterfaceConformanceResponseMsg">
+		<part name="body" element="tns:getDocumentInfoInterfaceConformanceResponse"/>
+	</message>
+	<portType name="AWSMerchantServicePortType">
+		<operation name="getMerchantInfoFromCustomerID">
+			<input message="tns:getMerchantInfoFromCustomerIDRequestMsg"/>
+			<output message="tns:getMerchantInfoFromCustomerIDResponseMsg"/>
+		</operation>
+		<operation name="postDocument">
+			<input message="tns:postDocumentRequestMsg"/>
+			<output message="tns:postDocumentResponseMsg"/>
+		</operation>
+		<operation name="getDocument">
+			<input message="tns:getDocumentRequestMsg"/>
+			<output message="tns:getDocumentResponseMsg"/>
+		</operation>
+		<operation name="generateReport">
+			<input message="tns:generateReportRequestMsg"/>
+			<output message="tns:generateReportResponseMsg"/>
+		</operation>
+		<operation name="getLastNDocumentInfo">
+			<input message="tns:getLastNDocumentInfoRequestMsg"/>
+			<output message="tns:getLastNDocumentInfoResponseMsg"/>
+		</operation>
+		<operation name="getDocumentInterfaceConformance">
+			<input message="tns:getDocumentInterfaceConformanceRequestMsg"/>
+			<output message="tns:getDocumentInterfaceConformanceResponseMsg"/>
+		</operation>
+		<operation name="getLastNReportInfo">
+			<input message="tns:getLastNReportInfoRequestMsg"/>
+			<output message="tns:getLastNReportInfoResponseMsg"/>
+		</operation>
+		<operation name="getLastNDocumentProcessingStatuses">
+			<input message="tns:getLastNDocumentProcessingStatusesRequestMsg"/>
+			<output message="tns:getLastNDocumentProcessingStatusesResponseMsg"/>
+		</operation>
+		<operation name="getAllPendingDocumentInfo">
+			<input message="tns:getAllPendingDocumentInfoRequestMsg"/>
+			<output message="tns:getAllPendingDocumentInfoResponseMsg"/>
+		</operation>
+		<operation name="getDocumentInfoListGivenTimeWindow">
+			<input message="tns:getDocumentInfoListGivenTimeWindowRequestMsg"/>
+			<output message="tns:getDocumentInfoListGivenTimeWindowResponseMsg"/>
+		</operation>
+		<operation name="getLastNPendingDocumentInfo">
+			<input message="tns:getLastNPendingDocumentInfoRequestMsg"/>
+			<output message="tns:getLastNPendingDocumentInfoResponseMsg"/>
+		</operation>
+		<operation name="postDocumentDownloadAck">
+			<input message="tns:postDocumentDownloadAckRequestMsg"/>
+			<output message="tns:postDocumentDownloadAckResponseMsg"/>
+		</operation>
+		<operation name="getDocumentProcessingStatus">
+			<input message="tns:getDocumentProcessingStatusRequestMsg"/>
+			<output message="tns:getDocumentProcessingStatusResponseMsg"/>
+		</operation>
+		<operation name="postReport">
+			<input message="tns:postReportRequestMsg"/>
+			<output message="tns:postReportResponseMsg"/>
+		</operation>
+		<operation name="scheduleReports">
+			<input message="tns:scheduleReportsRequestMsg"/>
+			<output message="tns:scheduleReportsResponseMsg"/>
+		</operation>
+		<operation name="postDocumentConfirmation">
+			<input message="tns:postDocumentConfirmationRequestMsg"/>
+			<output message="tns:postDocumentConfirmationResponseMsg"/>
+		</operation>
+		<operation name="postDocumentInterfaceConformance">
+			<input message="tns:postDocumentInterfaceConformanceRequestMsg"/>
+			<output message="tns:postDocumentInterfaceConformanceResponseMsg"/>
+		</operation>
+		<operation name="postDocumentUnconfirmed">
+			<input message="tns:postDocumentUnconfirmedRequestMsg"/>
+			<output message="tns:postDocumentUnconfirmedResponseMsg"/>
+		</operation>
+		<operation name="postDocumentUnconfirmedInterfaceConformance">
+			<input message="tns:postDocumentUnconfirmedInterfaceConformanceRequestMsg"/>
+			<output message="tns:postDocumentUnconfirmedInterfaceConformanceResponseMsg"/>
+		</operation>
+		<operation name="getPendingDocumentInfoListGivenTimeWindow">
+			<input message="tns:getPendingDocumentInfoListGivenTimeWindowRequestMsg"/>
+			<output message="tns:getPendingDocumentInfoListGivenTimeWindowResponseMsg"/>
+		</operation>
+		<operation name="getDocumentInfoInterfaceConformance">
+			<input message="tns:getDocumentInfoInterfaceConformanceRequestMsg"/>
+			<output message="tns:getDocumentInfoInterfaceConformanceResponseMsg"/>
+		</operation>
+	</portType>
+	<binding name="AWSMerchantServiceBinding" type="tns:AWSMerchantServicePortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="getMerchantInfoFromCustomerID">
+			<soap:operation soapAction="http://soap.amazon.com"/>
+			<input>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="postDocument">
+			<soap:operation soapAction="http://soap.amazon.com"/>
+			<input>
+				<mime:multipartRelated>
+					<mime:part>
+						<soap:body parts="body" use="literal"/>
+					</mime:part>
+					<mime:part>
+						<mime:content part="document" type="multipart/mixed"/>
+					</mime:part>
+				</mime:multipartRelated>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="getDocument">
+			<soap:operation soapAction="http://soap.amazon.com"/>
+			<input>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<mime:multipartRelated>
+					<mime:part>
+						<soap:body use="literal" parts="body"/>
+					</mime:part>
+					<mime:part>
+						<mime:content part="document" type="multipart/mixed"/>
+					</mime:part>
+				</mime:multipartRelated>
+			</output>
+		</operation>
+		<operation name="generateReport">
+			<soap:operation soapAction="http://soap.amazon.com"/>
+			<input>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="getLastNDocumentInfo">
+			<soap:operation soapAction="http://soap.amazon.com"/>
+			<input>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="getDocumentInterfaceConformance">
+			<soap:operation soapAction="http://soap.amazon.com"/>
+			<input>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<mime:multipartRelated>
+					<mime:part>
+						<soap:body use="literal" parts="body"/>
+					</mime:part>
+					<mime:part>
+						<mime:content part="document" type="multipart/mixed"/>
+					</mime:part>
+				</mime:multipartRelated>
+			</output>
+		</operation>
+		<operation name="getLastNReportInfo">
+			<soap:operation soapAction="http://soap.amazon.com"/>
+			<input>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="getLastNDocumentProcessingStatuses">
+			<soap:operation soapAction="http://soap.amazon.com"/>
+			<input>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="getAllPendingDocumentInfo">
+			<soap:operation soapAction="http://soap.amazon.com"/>
+			<input>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="getDocumentInfoListGivenTimeWindow">
+			<soap:operation soapAction="http://soap.amazon.com"/>
+			<input>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="getLastNPendingDocumentInfo">
+			<soap:operation soapAction="http://soap.amazon.com"/>
+			<input>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="postDocumentDownloadAck">
+			<soap:operation soapAction="http://soap.amazon.com"/>
+			<input>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="getDocumentProcessingStatus">
+			<soap:operation soapAction="http://soap.amazon.com"/>
+			<input>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="postReport">
+			<soap:operation soapAction="http://soap.amazon.com"/>
+			<input>
+				<mime:multipartRelated>
+					<mime:part>
+						<soap:body use="literal" parts="body"/>
+					</mime:part>
+					<mime:part>
+						<mime:content part="document" type="multipart/mixed"/>
+					</mime:part>
+				</mime:multipartRelated>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="scheduleReports">
+			<soap:operation soapAction="http://soap.amazon.com"/>
+			<input>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="postDocumentConfirmation">
+			<soap:operation soapAction="http://soap.amazon.com"/>
+			<input>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="postDocumentInterfaceConformance">
+			<soap:operation soapAction="http://soap.amazon.com"/>
+			<input>
+				<mime:multipartRelated>
+					<mime:part>
+						<soap:body use="literal" parts="body"/>
+					</mime:part>
+					<mime:part>
+						<mime:content part="document" type="multipart/mixed"/>
+					</mime:part>
+				</mime:multipartRelated>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="postDocumentUnconfirmed">
+			<soap:operation soapAction="http://soap.amazon.com"/>
+			<input>
+				<mime:multipartRelated>
+					<mime:part>
+						<soap:body use="literal" parts="body"/>
+					</mime:part>
+					<mime:part>
+						<mime:content part="document" type="multipart/mixed"/>
+					</mime:part>
+				</mime:multipartRelated>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="postDocumentUnconfirmedInterfaceConformance">
+			<soap:operation soapAction="http://soap.amazon.com"/>
+			<input>
+				<mime:multipartRelated>
+					<mime:part>
+						<soap:body use="literal" parts="body"/>
+					</mime:part>
+					<mime:part>
+						<mime:content part="document" type="multipart/mixed"/>
+					</mime:part>
+				</mime:multipartRelated>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="getPendingDocumentInfoListGivenTimeWindow">
+			<soap:operation soapAction="http://soap.amazon.com"/>
+			<input>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="getDocumentInfoInterfaceConformance">
+			<soap:operation soapAction="http://soap.amazon.com"/>
+			<input>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+	</binding>
+	<service name="AWSMerchantService">
+		<port name="AWSMerchantServicePort" binding="tns:AWSMerchantServiceBinding">
+			<soap:address location="http://merchant-beta.amazon.com/onca/soap?Service=AWSMerchantService"/>
+		</port>
+	</service>
+</definitions>

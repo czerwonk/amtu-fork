@@ -1,0 +1,909 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://xml.amazon.com/AWSMerchantService/2005-08-15" targetNamespace="http://xml.amazon.com/AWSMerchantService/2005-08-15" elementFormDefault="qualified">
+	<xs:element name="OperationRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:HTTPHeaders" minOccurs="0"/>
+				<xs:element name="RequestId" type="xs:string" minOccurs="0"/>
+				<xs:element ref="tns:Arguments" minOccurs="0"/>
+				<xs:element ref="tns:Errors" minOccurs="0"/>
+				<xs:element name="RequestProcessingTime" type="xs:float" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="HTTPHeaders">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Header" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:attribute name="Name" type="xs:string" use="required"/>
+						<xs:attribute name="Value" type="xs:string" use="required"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Arguments">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Argument" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:attribute name="Name" type="xs:string" use="required"/>
+						<xs:attribute name="Value" type="xs:string" use="required"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Errors">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Error" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Code" type="xs:string"/>
+							<xs:element name="Message" type="xs:string"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Request">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="IsValid" type="xs:string" minOccurs="0"/>
+				<xs:element name="Help" type="tns:HelpRequest" minOccurs="0"/>
+				<xs:element name="getMerchantInfoFromCustomerID" type="tns:getMerchantInfoFromCustomerIDRequest" minOccurs="0"/>
+				<xs:element name="postDocument" type="tns:postDocumentRequest" minOccurs="0"/>
+				<xs:element name="getDocument" type="tns:getDocumentRequest" minOccurs="0"/>
+				<xs:element name="generateReport" type="tns:generateReportRequest" minOccurs="0"/>
+				<xs:element name="getLastNDocumentInfo" type="tns:getLastNDocumentInfoRequest" minOccurs="0"/>
+				<xs:element name="getDocumentInterfaceConformance" type="tns:getDocumentInterfaceConformanceRequest" minOccurs="0"/>
+				<xs:element name="getLastNReportInfo" type="tns:getLastNReportInfoRequest" minOccurs="0"/>
+				<xs:element name="getLastNDocumentProcessingStatuses" type="tns:getLastNDocumentProcessingStatusesRequest" minOccurs="0"/>
+				<xs:element name="getAllPendingDocumentInfo" type="tns:getAllPendingDocumentInfoRequest" minOccurs="0"/>
+				<xs:element name="getDocumentInfoListGivenTimeWindow" type="tns:getDocumentInfoListGivenTimeWindowRequest" minOccurs="0"/>
+				<xs:element name="getLastNPendingDocumentInfo" type="tns:getLastNPendingDocumentInfoRequest" minOccurs="0"/>
+				<xs:element name="postDocumentDownloadAck" type="tns:postDocumentDownloadAckRequest" minOccurs="0"/>
+				<xs:element name="getDocumentProcessingStatus" type="tns:getDocumentProcessingStatusRequest" minOccurs="0"/>
+				<xs:element name="postReport" type="tns:postReportRequest" minOccurs="0"/>
+				<xs:element name="scheduleReports" type="tns:scheduleReportsRequest" minOccurs="0"/>
+				<xs:element name="postDocumentConfirmation" type="tns:postDocumentConfirmationRequest" minOccurs="0"/>
+				<xs:element name="postDocumentInterfaceConformance" type="tns:postDocumentInterfaceConformanceRequest" minOccurs="0"/>
+				<xs:element name="postDocumentUnconfirmed" type="tns:postDocumentUnconfirmedRequest" minOccurs="0"/>
+				<xs:element name="postDocumentUnconfirmedInterfaceConformance" type="tns:postDocumentUnconfirmedInterfaceConformanceRequest" minOccurs="0"/>
+				<xs:element name="getPendingDocumentInfoListGivenTimeWindow" type="tns:getPendingDocumentInfoListGivenTimeWindowRequest" minOccurs="0"/>
+				<xs:element name="getDocumentInfoInterfaceConformance" type="tns:getDocumentInfoInterfaceConformanceRequest" minOccurs="0"/>
+				<xs:element ref="tns:Errors" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="Merchant">
+		<xs:sequence>
+			<xs:element name="merchantName" type="xs:string"/>
+			<xs:element name="merchantIdentifier" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocumentIDArray">
+		<xs:sequence>
+			<xs:element name="item" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocumentSubmissionResponse">
+		<xs:sequence>
+			<xs:element ref="tns:Request" minOccurs="0"/>
+			<xs:element name="documentTransactionID" type="xs:long"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocumentInfoArray">
+		<xs:sequence>
+			<xs:element ref="tns:Request" minOccurs="0"/>
+			<xs:element name="item" type="tns:DocumentInfo" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocumentInfo">
+		<xs:sequence>
+			<xs:element name="documentID" type="xs:string"/>
+			<xs:element name="generatedDateTime" type="xs:dateTime"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="getMerchantInfoFromCustomerID">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SubscriptionId" type="xs:string"/>
+				<xs:element name="Validate" type="xs:string" minOccurs="0"/>
+				<xs:element name="XMLEscaping" type="xs:string" minOccurs="0"/>
+				<xs:element name="Shared" type="tns:getMerchantInfoFromCustomerIDRequest" minOccurs="0"/>
+				<xs:element name="Request" type="tns:getMerchantInfoFromCustomerIDRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Credential" type="xs:string"/>
+				<xs:element name="Signature" type="xs:string"/>
+				<xs:element name="Timestamp" type="xs:dateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="getMerchantInfoFromCustomerIDRequest">
+		<xs:sequence>
+			<xs:element name="customerID" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="getMerchantInfoFromCustomerIDResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:OperationRequest" minOccurs="0"/>
+				<xs:element name="response" type="tns:MerchantInfo" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="MerchantInfo">
+		<xs:sequence>
+			<xs:element ref="tns:Request" minOccurs="0"/>
+			<xs:element name="merchantID" type="xs:string"/>
+			<xs:element name="partyID" type="xs:string"/>
+			<xs:element name="partyRelationshipID" type="xs:string"/>
+			<xs:element name="partyName" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="postDocument">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SubscriptionId" type="xs:string"/>
+				<xs:element name="Validate" type="xs:string" minOccurs="0"/>
+				<xs:element name="XMLEscaping" type="xs:string" minOccurs="0"/>
+				<xs:element name="Shared" type="tns:postDocumentRequest" minOccurs="0"/>
+				<xs:element name="Request" type="tns:postDocumentRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Credential" type="xs:string"/>
+				<xs:element name="Signature" type="xs:string"/>
+				<xs:element name="Timestamp" type="xs:dateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="postDocumentRequest">
+		<xs:sequence>
+			<xs:element name="merchant" type="tns:Merchant"/>
+			<xs:element name="messageType" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="postDocumentResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:OperationRequest" minOccurs="0"/>
+				<xs:element name="response" type="tns:DocumentSubmissionResponse" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="getDocument">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SubscriptionId" type="xs:string"/>
+				<xs:element name="Validate" type="xs:string" minOccurs="0"/>
+				<xs:element name="XMLEscaping" type="xs:string" minOccurs="0"/>
+				<xs:element name="Shared" type="tns:getDocumentRequest" minOccurs="0"/>
+				<xs:element name="Request" type="tns:getDocumentRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Credential" type="xs:string"/>
+				<xs:element name="Signature" type="xs:string"/>
+				<xs:element name="Timestamp" type="xs:dateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="getDocumentRequest">
+		<xs:sequence>
+			<xs:element name="merchant" type="tns:Merchant"/>
+			<xs:element name="documentIdentifier" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="getDocumentResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:OperationRequest" minOccurs="0"/>
+				<xs:element name="response" type="tns:GetDocumentResult" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="GetDocumentResult">
+		<xs:sequence>
+			<xs:element ref="tns:Request" minOccurs="0"/>
+			<xs:element name="string_Response" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="generateReport">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SubscriptionId" type="xs:string"/>
+				<xs:element name="Validate" type="xs:string" minOccurs="0"/>
+				<xs:element name="XMLEscaping" type="xs:string" minOccurs="0"/>
+				<xs:element name="Shared" type="tns:generateReportRequest" minOccurs="0"/>
+				<xs:element name="Request" type="tns:generateReportRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Credential" type="xs:string"/>
+				<xs:element name="Signature" type="xs:string"/>
+				<xs:element name="Timestamp" type="xs:dateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="generateReportRequest">
+		<xs:sequence>
+			<xs:element name="merchant" type="tns:Merchant"/>
+			<xs:element name="reportType" type="xs:string"/>
+			<xs:element name="startDate" type="xs:dateTime"/>
+			<xs:element name="endDate" type="xs:dateTime"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="generateReportResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:OperationRequest" minOccurs="0"/>
+				<xs:element name="response" type="tns:GenerateReportResult" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="GenerateReportResult">
+		<xs:sequence>
+			<xs:element ref="tns:Request" minOccurs="0"/>
+			<xs:element name="reportTransactionID" type="xs:long" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="getLastNDocumentInfo">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SubscriptionId" type="xs:string"/>
+				<xs:element name="Validate" type="xs:string" minOccurs="0"/>
+				<xs:element name="XMLEscaping" type="xs:string" minOccurs="0"/>
+				<xs:element name="Shared" type="tns:getLastNDocumentInfoRequest" minOccurs="0"/>
+				<xs:element name="Request" type="tns:getLastNDocumentInfoRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Credential" type="xs:string"/>
+				<xs:element name="Signature" type="xs:string"/>
+				<xs:element name="Timestamp" type="xs:dateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="getLastNDocumentInfoRequest">
+		<xs:sequence>
+			<xs:element name="merchant" type="tns:Merchant"/>
+			<xs:element name="messageType" type="xs:string"/>
+			<xs:element name="howMany" type="xs:int"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="getLastNDocumentInfoResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:OperationRequest" minOccurs="0"/>
+				<xs:element name="response" type="tns:DocumentInfoArray" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="getDocumentInterfaceConformance">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SubscriptionId" type="xs:string"/>
+				<xs:element name="Validate" type="xs:string" minOccurs="0"/>
+				<xs:element name="XMLEscaping" type="xs:string" minOccurs="0"/>
+				<xs:element name="Shared" type="tns:getDocumentInterfaceConformanceRequest" minOccurs="0"/>
+				<xs:element name="Request" type="tns:getDocumentInterfaceConformanceRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Credential" type="xs:string"/>
+				<xs:element name="Signature" type="xs:string"/>
+				<xs:element name="Timestamp" type="xs:dateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="getDocumentInterfaceConformanceRequest">
+		<xs:sequence>
+			<xs:element name="merchant" type="tns:Merchant"/>
+			<xs:element name="documentIdentifier" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="getDocumentInterfaceConformanceResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:OperationRequest" minOccurs="0"/>
+				<xs:element name="response" type="tns:GetDocumentInterfaceConformanceResponse" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="GetDocumentInterfaceConformanceResponse">
+		<xs:sequence>
+			<xs:element ref="tns:Request" minOccurs="0"/>
+			<xs:element name="string_Response" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="getLastNReportInfo">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SubscriptionId" type="xs:string"/>
+				<xs:element name="Validate" type="xs:string" minOccurs="0"/>
+				<xs:element name="XMLEscaping" type="xs:string" minOccurs="0"/>
+				<xs:element name="Shared" type="tns:getLastNReportInfoRequest" minOccurs="0"/>
+				<xs:element name="Request" type="tns:getLastNReportInfoRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Credential" type="xs:string"/>
+				<xs:element name="Signature" type="xs:string"/>
+				<xs:element name="Timestamp" type="xs:dateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="getLastNReportInfoRequest">
+		<xs:sequence>
+			<xs:element name="merchant" type="tns:Merchant"/>
+			<xs:element name="messageType" type="xs:string"/>
+			<xs:element name="numberOfReports" type="xs:int"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="getLastNReportInfoResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:OperationRequest" minOccurs="0"/>
+				<xs:element name="response" type="tns:ReportInfoArray" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="ReportInfoArray">
+		<xs:sequence>
+			<xs:element ref="tns:Request" minOccurs="0"/>
+			<xs:element name="item" type="tns:ReportInfo" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReportInfo">
+		<xs:sequence>
+			<xs:element name="documentID" type="xs:string"/>
+			<xs:element name="requestedTime" type="xs:dateTime"/>
+			<xs:element name="generatedTime" type="xs:dateTime"/>
+			<xs:element name="startDate" type="xs:dateTime"/>
+			<xs:element name="endDate" type="xs:dateTime"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="getLastNDocumentProcessingStatuses">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SubscriptionId" type="xs:string"/>
+				<xs:element name="Validate" type="xs:string" minOccurs="0"/>
+				<xs:element name="XMLEscaping" type="xs:string" minOccurs="0"/>
+				<xs:element name="Shared" type="tns:getLastNDocumentProcessingStatusesRequest" minOccurs="0"/>
+				<xs:element name="Request" type="tns:getLastNDocumentProcessingStatusesRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Credential" type="xs:string"/>
+				<xs:element name="Signature" type="xs:string"/>
+				<xs:element name="Timestamp" type="xs:dateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="getLastNDocumentProcessingStatusesRequest">
+		<xs:sequence>
+			<xs:element name="merchant" type="tns:Merchant"/>
+			<xs:element name="numberOfStatuses" type="xs:int"/>
+			<xs:element name="uploadType" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="getLastNDocumentProcessingStatusesResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:OperationRequest" minOccurs="0"/>
+				<xs:element name="response" type="tns:SummaryInfoArray" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="SummaryInfoArray">
+		<xs:sequence>
+			<xs:element ref="tns:Request" minOccurs="0"/>
+			<xs:element name="item" type="tns:SummaryInfo" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SummaryInfo">
+		<xs:sequence>
+			<xs:element name="batchID" type="xs:long"/>
+			<xs:element name="batchStatus" type="xs:string"/>
+			<xs:element name="uploadDateTime" type="xs:dateTime"/>
+			<xs:element name="summaryLogFile" type="xs:string"/>
+			<xs:element name="numberOfRecordsWithErrors" type="xs:int"/>
+			<xs:element name="numberOfRecordsWithWarnings" type="xs:int"/>
+			<xs:element name="numberOfSuccessful" type="xs:int"/>
+			<xs:element name="numberOfProcessed" type="xs:int"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="getAllPendingDocumentInfo">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SubscriptionId" type="xs:string"/>
+				<xs:element name="Validate" type="xs:string" minOccurs="0"/>
+				<xs:element name="XMLEscaping" type="xs:string" minOccurs="0"/>
+				<xs:element name="Shared" type="tns:getAllPendingDocumentInfoRequest" minOccurs="0"/>
+				<xs:element name="Request" type="tns:getAllPendingDocumentInfoRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Credential" type="xs:string"/>
+				<xs:element name="Signature" type="xs:string"/>
+				<xs:element name="Timestamp" type="xs:dateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="getAllPendingDocumentInfoRequest">
+		<xs:sequence>
+			<xs:element name="merchant" type="tns:Merchant"/>
+			<xs:element name="messageType" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="getAllPendingDocumentInfoResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:OperationRequest" minOccurs="0"/>
+				<xs:element name="response" type="tns:DocumentInfoArray" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="getDocumentInfoListGivenTimeWindow">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SubscriptionId" type="xs:string"/>
+				<xs:element name="Validate" type="xs:string" minOccurs="0"/>
+				<xs:element name="XMLEscaping" type="xs:string" minOccurs="0"/>
+				<xs:element name="Shared" type="tns:getDocumentInfoListGivenTimeWindowRequest" minOccurs="0"/>
+				<xs:element name="Request" type="tns:getDocumentInfoListGivenTimeWindowRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Credential" type="xs:string"/>
+				<xs:element name="Signature" type="xs:string"/>
+				<xs:element name="Timestamp" type="xs:dateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="getDocumentInfoListGivenTimeWindowRequest">
+		<xs:sequence>
+			<xs:element name="merchant" type="tns:Merchant"/>
+			<xs:element name="messageType" type="xs:string"/>
+			<xs:element name="fromDate" type="xs:dateTime"/>
+			<xs:element name="toDate" type="xs:dateTime"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="getDocumentInfoListGivenTimeWindowResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:OperationRequest" minOccurs="0"/>
+				<xs:element name="response" type="tns:DocumentInfoArray" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="getLastNPendingDocumentInfo">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SubscriptionId" type="xs:string"/>
+				<xs:element name="Validate" type="xs:string" minOccurs="0"/>
+				<xs:element name="XMLEscaping" type="xs:string" minOccurs="0"/>
+				<xs:element name="Shared" type="tns:getLastNPendingDocumentInfoRequest" minOccurs="0"/>
+				<xs:element name="Request" type="tns:getLastNPendingDocumentInfoRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Credential" type="xs:string"/>
+				<xs:element name="Signature" type="xs:string"/>
+				<xs:element name="Timestamp" type="xs:dateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="getLastNPendingDocumentInfoRequest">
+		<xs:sequence>
+			<xs:element name="merchant" type="tns:Merchant"/>
+			<xs:element name="messageType" type="xs:string"/>
+			<xs:element name="howMany" type="xs:int"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="getLastNPendingDocumentInfoResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:OperationRequest" minOccurs="0"/>
+				<xs:element name="response" type="tns:DocumentInfoArray" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="postDocumentDownloadAck">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SubscriptionId" type="xs:string"/>
+				<xs:element name="Validate" type="xs:string" minOccurs="0"/>
+				<xs:element name="XMLEscaping" type="xs:string" minOccurs="0"/>
+				<xs:element name="Shared" type="tns:postDocumentDownloadAckRequest" minOccurs="0"/>
+				<xs:element name="Request" type="tns:postDocumentDownloadAckRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Credential" type="xs:string"/>
+				<xs:element name="Signature" type="xs:string"/>
+				<xs:element name="Timestamp" type="xs:dateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="postDocumentDownloadAckRequest">
+		<xs:sequence>
+			<xs:element name="merchant" type="tns:Merchant"/>
+			<xs:element name="documentIdentifierArray" type="tns:DocumentIDArray"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="postDocumentDownloadAckResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:OperationRequest" minOccurs="0"/>
+				<xs:element name="response" type="tns:DocumentDownloadAckStatusArray" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="DocumentDownloadAckStatusArray">
+		<xs:sequence>
+			<xs:element ref="tns:Request" minOccurs="0"/>
+			<xs:element name="item" type="tns:DocumentDownloadAckStatus" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocumentDownloadAckStatus">
+		<xs:sequence>
+			<xs:element name="documentID" type="xs:string"/>
+			<xs:element name="documentDownloadAckProcessingStatus" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="getDocumentProcessingStatus">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SubscriptionId" type="xs:string"/>
+				<xs:element name="Validate" type="xs:string" minOccurs="0"/>
+				<xs:element name="XMLEscaping" type="xs:string" minOccurs="0"/>
+				<xs:element name="Shared" type="tns:getDocumentProcessingStatusRequest" minOccurs="0"/>
+				<xs:element name="Request" type="tns:getDocumentProcessingStatusRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Credential" type="xs:string"/>
+				<xs:element name="Signature" type="xs:string"/>
+				<xs:element name="Timestamp" type="xs:dateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="getDocumentProcessingStatusRequest">
+		<xs:sequence>
+			<xs:element name="merchant" type="tns:Merchant"/>
+			<xs:element name="documentTransactionIdentifier" type="xs:long"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="getDocumentProcessingStatusResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:OperationRequest" minOccurs="0"/>
+				<xs:element name="response" type="tns:DocumentProcessingInfo" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="DocumentProcessingInfo">
+		<xs:sequence>
+			<xs:element ref="tns:Request" minOccurs="0"/>
+			<xs:element name="documentProcessingStatus" type="xs:string"/>
+			<xs:element name="processingReport" type="tns:DocumentInfo"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="postReport">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SubscriptionId" type="xs:string"/>
+				<xs:element name="Validate" type="xs:string" minOccurs="0"/>
+				<xs:element name="XMLEscaping" type="xs:string" minOccurs="0"/>
+				<xs:element name="Shared" type="tns:postReportRequest" minOccurs="0"/>
+				<xs:element name="Request" type="tns:postReportRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Credential" type="xs:string"/>
+				<xs:element name="Signature" type="xs:string"/>
+				<xs:element name="Timestamp" type="xs:dateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="postReportRequest">
+		<xs:sequence>
+			<xs:element name="merchant" type="tns:Merchant"/>
+			<xs:element name="messageType" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="postReportResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:OperationRequest" minOccurs="0"/>
+				<xs:element name="response" type="tns:DocumentSubmissionResponse" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="scheduleReports">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SubscriptionId" type="xs:string"/>
+				<xs:element name="Validate" type="xs:string" minOccurs="0"/>
+				<xs:element name="XMLEscaping" type="xs:string" minOccurs="0"/>
+				<xs:element name="Shared" type="tns:scheduleReportsRequest" minOccurs="0"/>
+				<xs:element name="Request" type="tns:scheduleReportsRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Credential" type="xs:string"/>
+				<xs:element name="Signature" type="xs:string"/>
+				<xs:element name="Timestamp" type="xs:dateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="scheduleReportsRequest">
+		<xs:sequence>
+			<xs:element name="merchant" type="tns:Merchant"/>
+			<xs:element name="reportType" type="xs:string"/>
+			<xs:element name="frequency" type="tns:FrequencyType"/>
+			<xs:element name="startDate" type="xs:dateTime"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="FrequencyType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="_30_MINUTES_"/>
+			<xs:enumeration value="_1_HOUR_"/>
+			<xs:enumeration value="_4_HOURS_"/>
+			<xs:enumeration value="_8_HOURS_"/>
+			<xs:enumeration value="_1_DAY_"/>
+			<xs:enumeration value="_15_DAYS_"/>
+			<xs:enumeration value="_30_DAYS_"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="scheduleReportsResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:OperationRequest" minOccurs="0"/>
+				<xs:element name="response" type="tns:ReportGenerationResponse" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="ReportGenerationResponse">
+		<xs:sequence>
+			<xs:element ref="tns:Request" minOccurs="0"/>
+			<xs:element name="reportTransactionID" type="xs:long"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="postDocumentConfirmation">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SubscriptionId" type="xs:string"/>
+				<xs:element name="Validate" type="xs:string" minOccurs="0"/>
+				<xs:element name="XMLEscaping" type="xs:string" minOccurs="0"/>
+				<xs:element name="Shared" type="tns:postDocumentConfirmationRequest" minOccurs="0"/>
+				<xs:element name="Request" type="tns:postDocumentConfirmationRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Credential" type="xs:string"/>
+				<xs:element name="Signature" type="xs:string"/>
+				<xs:element name="Timestamp" type="xs:dateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="postDocumentConfirmationRequest">
+		<xs:sequence>
+			<xs:element name="merchant" type="tns:Merchant"/>
+			<xs:element name="documentTransactionIdentifier" type="xs:long"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="postDocumentConfirmationResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:OperationRequest" minOccurs="0"/>
+				<xs:element name="response" type="tns:DocumentSubmissionResponse" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="postDocumentInterfaceConformance">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SubscriptionId" type="xs:string"/>
+				<xs:element name="Validate" type="xs:string" minOccurs="0"/>
+				<xs:element name="XMLEscaping" type="xs:string" minOccurs="0"/>
+				<xs:element name="Shared" type="tns:postDocumentInterfaceConformanceRequest" minOccurs="0"/>
+				<xs:element name="Request" type="tns:postDocumentInterfaceConformanceRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Credential" type="xs:string"/>
+				<xs:element name="Signature" type="xs:string"/>
+				<xs:element name="Timestamp" type="xs:dateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="postDocumentInterfaceConformanceRequest">
+		<xs:sequence>
+			<xs:element name="merchant" type="tns:Merchant"/>
+			<xs:element name="messageType" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="postDocumentInterfaceConformanceResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:OperationRequest" minOccurs="0"/>
+				<xs:element name="response" type="tns:DocumentSubmissionResponse" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="postDocumentUnconfirmed">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SubscriptionId" type="xs:string"/>
+				<xs:element name="Validate" type="xs:string" minOccurs="0"/>
+				<xs:element name="XMLEscaping" type="xs:string" minOccurs="0"/>
+				<xs:element name="Shared" type="tns:postDocumentUnconfirmedRequest" minOccurs="0"/>
+				<xs:element name="Request" type="tns:postDocumentUnconfirmedRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Credential" type="xs:string"/>
+				<xs:element name="Signature" type="xs:string"/>
+				<xs:element name="Timestamp" type="xs:dateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="postDocumentUnconfirmedRequest">
+		<xs:sequence>
+			<xs:element name="merchant" type="tns:Merchant"/>
+			<xs:element name="messageType" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="postDocumentUnconfirmedResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:OperationRequest" minOccurs="0"/>
+				<xs:element name="response" type="tns:DocumentSubmissionResponse" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="postDocumentUnconfirmedInterfaceConformance">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SubscriptionId" type="xs:string"/>
+				<xs:element name="Validate" type="xs:string" minOccurs="0"/>
+				<xs:element name="XMLEscaping" type="xs:string" minOccurs="0"/>
+				<xs:element name="Shared" type="tns:postDocumentUnconfirmedInterfaceConformanceRequest" minOccurs="0"/>
+				<xs:element name="Request" type="tns:postDocumentUnconfirmedInterfaceConformanceRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Credential" type="xs:string"/>
+				<xs:element name="Signature" type="xs:string"/>
+				<xs:element name="Timestamp" type="xs:dateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="postDocumentUnconfirmedInterfaceConformanceRequest">
+		<xs:sequence>
+			<xs:element name="merchant" type="tns:Merchant"/>
+			<xs:element name="messageType" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="postDocumentUnconfirmedInterfaceConformanceResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:OperationRequest" minOccurs="0"/>
+				<xs:element name="response" type="tns:DocumentSubmissionResponse" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="getPendingDocumentInfoListGivenTimeWindow">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SubscriptionId" type="xs:string"/>
+				<xs:element name="Validate" type="xs:string" minOccurs="0"/>
+				<xs:element name="XMLEscaping" type="xs:string" minOccurs="0"/>
+				<xs:element name="Shared" type="tns:getPendingDocumentInfoListGivenTimeWindowRequest" minOccurs="0"/>
+				<xs:element name="Request" type="tns:getPendingDocumentInfoListGivenTimeWindowRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Credential" type="xs:string"/>
+				<xs:element name="Signature" type="xs:string"/>
+				<xs:element name="Timestamp" type="xs:dateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="getPendingDocumentInfoListGivenTimeWindowRequest">
+		<xs:sequence>
+			<xs:element name="merchant" type="tns:Merchant"/>
+			<xs:element name="messageType" type="xs:string"/>
+			<xs:element name="fromDate" type="xs:dateTime"/>
+			<xs:element name="toDate" type="xs:dateTime"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="getPendingDocumentInfoListGivenTimeWindowResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:OperationRequest" minOccurs="0"/>
+				<xs:element name="response" type="tns:DocumentInfoArray" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="getDocumentInfoInterfaceConformance">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SubscriptionId" type="xs:string"/>
+				<xs:element name="Validate" type="xs:string" minOccurs="0"/>
+				<xs:element name="XMLEscaping" type="xs:string" minOccurs="0"/>
+				<xs:element name="Shared" type="tns:getDocumentInfoInterfaceConformanceRequest" minOccurs="0"/>
+				<xs:element name="Request" type="tns:getDocumentInfoInterfaceConformanceRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Credential" type="xs:string"/>
+				<xs:element name="Signature" type="xs:string"/>
+				<xs:element name="Timestamp" type="xs:dateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="getDocumentInfoInterfaceConformanceRequest">
+		<xs:sequence>
+			<xs:element name="merchant" type="tns:Merchant"/>
+			<xs:element name="messageType" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="getDocumentInfoInterfaceConformanceResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:OperationRequest" minOccurs="0"/>
+				<xs:element name="response" type="tns:DocumentInfoArray" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Help">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SubscriptionId" type="xs:string" minOccurs="0"/>
+				<xs:element name="AssociateTag" type="xs:string" minOccurs="0"/>
+				<xs:element name="Validate" type="xs:string" minOccurs="0"/>
+				<xs:element name="Shared" type="tns:HelpRequest" minOccurs="0"/>
+				<xs:element name="Request" type="tns:HelpRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Credential" type="xs:string"/>
+				<xs:element name="Signature" type="xs:string"/>
+				<xs:element name="Timestamp" type="xs:dateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="HelpRequest">
+		<xs:sequence>
+			<xs:element name="About" type="xs:string" minOccurs="0"/>
+			<xs:element name="HelpType" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Operation"/>
+						<xs:enumeration value="ResponseGroup"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ResponseGroup" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="HelpResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:OperationRequest" minOccurs="0"/>
+				<xs:element ref="tns:Information" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Information">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:Request" minOccurs="0"/>
+				<xs:element ref="tns:OperationInformation" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="tns:ResponseGroupInformation" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="OperationInformation">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Name" type="xs:string" minOccurs="0"/>
+				<xs:element name="Description" type="xs:string" minOccurs="0"/>
+				<xs:element name="RequiredParameters" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Parameter" type="xs:string" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="AvailableParameters" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Parameter" type="xs:string" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="DefaultResponseGroups" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="ResponseGroup" type="xs:string" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="AvailableResponseGroups" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="ResponseGroup" type="xs:string" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ResponseGroupInformation">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Name" type="xs:string" minOccurs="0"/>
+				<xs:element name="CreationDate" type="xs:string" minOccurs="0"/>
+				<xs:element name="ValidOperations" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Operation" type="xs:string" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Elements" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Element" type="xs:string" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
