@@ -1,4 +1,4 @@
-<project name="galega" basedir="." default="compile">
+<project name="amtu" basedir="." default="compile">
 
     <property file="build.properties"/>
 
