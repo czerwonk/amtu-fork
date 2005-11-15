@@ -120,7 +120,7 @@ public class Configure
 			options.add("View/Modify a configuration account");
 			options.add("Remove a configuration account");
 			options.add("Add a configuration account");
-			options.add("Add Amazon Web Servcies Information");
+			options.add("Add Amazon Web Services Information");
 			
 			switch(choice=TextMenuUtil.promptChoice("What would you like to do?",0,((String []) options.toArray(new String[0]))))
 			{

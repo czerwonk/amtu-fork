@@ -29,7 +29,7 @@ public class TransportMain
 			MBeanException,
 			ReflectionException
 	{
-		System.setProperty("transport.appversion", "_amtu1.0.2_");
+		System.setProperty("transport.appversion", "_amtu1.0.3_");
 
 		if (!TransportPreferences.instance().preferencesExist())
 		{
