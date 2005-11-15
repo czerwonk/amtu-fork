@@ -1,24 +1,74 @@
-This is a quick and dirty README for linux installation:
+AMTU
 
-The installation needs to run as root.  Therefore, some of the scripts
+===========================================================================
+LICENSE
+===========================================================================
+
+AMTU uses the Apache Software License.  Please refer to ./licenses/COPYING
+or http://www.apache.org/licenses/LICENSE-2.0.txt
+
+===========================================================================
+DOCUMENTATION
+===========================================================================
+
+This is a quick and dirty README for linux installation.  For more detailed
+documentation, please visit http://amtu.sourceforge.net/ to download the
+latest User Guide in pdf format.
+
+The above documentation should be read before proceeding with this
+installation.  Although it is written for a Windows installation, it does
+contain important information about AMTU configuration.
+
+===========================================================================
+INSTALLATION
+===========================================================================
+
+The following readme assumes that your current working directory is the
+directory where this README was found.
+
+Before running the installation, it is a good idea to run the uninstallation
+to clean up any artifacts of previous installations.  This needs to be run as
+root since the uninstallation script will be editing /etc/init.d/ and 
+/etc/rcX.d. directories:
+
+sudo ./uninstall.sh
+
+The installation also needs to run as root.  Therefore, some of the scripts
 will need to be editted unless root already has a $JAVA_HOME environment
-variable set, and the $PATH variable includes $JAVA_HOME/bin.
+variable set and the $PATH variable includes $JAVA_HOME/bin.
 
-Necessary modifications:
+Necessary script modifications:
 
 1.  In ./install.sh (the installation script in the same directory as this 
-readme), change 'export JAVA_HOME=$JAVA_HOME' to read 
-'export JAVA_HOME=/your/java/installation' and uncomment 
-'# export PATH=$JAVA_HOME:$PATH'.
+readme), change:
 
-2.  In ./service/conf/amt.conf and ./service/conf/monitor.conf, change
-wrapper.java.command=java to be whatever command root would have to run
-to run java.  If java isn't found in the $PATH environment variable, then
+export JAVA_HOME=$JAVA_HOME
+
+to read: 
+
+export JAVA_HOME=/your/java/installation 
+
+and uncomment:
+
+# export PATH=$JAVA_HOME:$PATH
+
+2.  In ./service/conf/amt.conf and ./service/conf/monitor.conf, change:
+
+wrapper.java.command=java 
+
+to be whatever command root would have to run to run java.  
+If java isn't found in the $PATH environment variable, then
 wrapper.java.command will likely have to point to an absolute path to java.
 
 Note that step 1 and 2 would be much simpler if root's environment knew
 something about java.  Step 1 is necessary because the installation is run
 as root.  Step 2 is necessary because the amt/monitor daemons are run as root.
 
-Once the above modifications are made, run 'sudo ./install.sh' from this
-directory.
+Once the above modifications are made, run:
+
+sudo ./install.sh
+
+from the directory containing this README.
+
+This script will install amt and amt_monitor as daemons, configure
+the application, and start the daemons.
