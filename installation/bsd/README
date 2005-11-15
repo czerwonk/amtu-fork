@@ -1,0 +1,31 @@
+AMTU
+
+===========================================================================
+LICENSE
+===========================================================================
+
+AMTU uses the Apache Software License.  Please refer to ./licenses/COPYING
+or http://www.apache.org/licenses/LICENSE-2.0.txt
+
+===========================================================================
+DOCUMENTATION
+===========================================================================
+
+This is a brief README for BSD Systems.  For more detailed
+documentation, please visit http://amtu.sourceforge.net/ to download the
+latest User Guide in pdf format.
+
+Please download the linux installation to use as a reference for installing
+AMTU on BSD Systems.
+
+Future support may come for BSD systems.  If you would like to add this support,
+remember that AMTU is open source and you are welcome to do so.
+
+The important things to note are that the scripts:
+
+./service/bin/amt
+./service/bin/amt_monitor
+
+will need to be run to start these applications.  In the System V world, a
+symlink to these scripts is put in /etc/init.d/ so that the applications can
+be run as a daemon.
