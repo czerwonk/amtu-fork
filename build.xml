@@ -38,6 +38,7 @@
             <fileset dir="${classes.dir}"/>
             <fileset dir="${src.dir}">
                 <include name="**/*.java"/>
+                <include name="**/*.properties"/>
                 <exclude name="**/CVS/"/>
             </fileset>
         </jar>
