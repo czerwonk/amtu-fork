@@ -26,7 +26,8 @@ public class TransportServer
 			InstantiationException,
 			IllegalAccessException,
 			ClassNotFoundException,
-			IOException
+			IOException,
+            AttributeNotFoundException
 	{
 		// Initialize MBeanServer, TimerService, and register
 		//  timers for all feeds and reports.

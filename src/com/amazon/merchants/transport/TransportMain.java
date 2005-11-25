@@ -27,7 +27,8 @@ public class TransportMain
 			InstanceNotFoundException,
 			ListenerNotFoundException,
 			MBeanException,
-			ReflectionException
+			ReflectionException,
+            AttributeNotFoundException
 	{
 		System.setProperty("transport.appversion", "_amtu1.0.3_");
 
