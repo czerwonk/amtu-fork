@@ -8,14 +8,21 @@ import com.amazon.merchants.transport.*;
 
 public class ProcessingReportRunner implements NotificationListener
 {
-	private static final Log log =
-		LogFactory.getLog(ProcessingReportRunner.class);
+	private static final Log log = LogFactory.getLog(ProcessingReportRunner.class);
 
+    // because of how this class is instantiated on the fly as needed,
+    // we have to synchronize on a static variable.  I think it's appropriate
+    // to synchronize at this level since this whole process should be "atomic".
+    // if we access the server for the same operation more than once, we could get
+    // ourselves into a bad state.
+    private static Object mutex = new Object();
+    
 	public void handleNotification(Notification arg0, Object arg1)
 	{
-		log.debug("Fetching Processing Reports");
-		TransportClient.instance().run(
-			TransportOperationEnum.GET_PROCESSING_REPORTS);
+        synchronized(mutex) {
+            log.debug("Fetching Processing Reports");
+            TransportClient.instance().run(TransportOperationEnum.GET_PROCESSING_REPORTS);
+        }
 	}
 
 }
