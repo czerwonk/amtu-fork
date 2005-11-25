@@ -83,7 +83,6 @@ public class EmitterService {
         mbs.createMBean("mx4j.tools.naming.NamingService", namingName, null);
         mbs.invoke(namingName, "start", null, null);
 
-        // comes from jndi.properties, in the classpath somewhere
         int namingPort = ((Integer) mbs.getAttribute(namingName, "Port")).intValue();
         String jndiPath = "/jmxconnector";
         String url = "service:jmx:rmi://localhost/jndi/rmi://localhost:" + namingPort + jndiPath;
