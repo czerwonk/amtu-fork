@@ -22,7 +22,15 @@
         </tstamp>
     </target>
 
-    <target name="compile" depends="_init">
+    <target name="wsdl2java">
+        <java fork="true" 
+              classname="org.apache.axis.wsdl.WSDL2Java" 
+              classpathref="compile.classpath">
+            <arg line="-W -o ${src.dir} -p ${wsdl.pkg.name} ${wsdl.dir}/${wsdl.filename}"/>
+        </java>
+    </target>
+
+    <target name="compile" depends="_init, wsdl2java">
         <javac destdir="${classes.dir}"
                srcdir="${src.dir}"
                debug="${compile.debug}"
