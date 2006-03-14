@@ -1,0 +1,668 @@
+<?xml version='1.0'?>
+<!--
+#****************************************************************
+#	Name: DocumentBroker
+#	Definition: WSDL that corresponds to the API for 
+#	   the Amazon.com DocumentBroker. 
+#****************************************************************
+-->
+<wsdl:definitions name='MerchantDataExchange' targetNamespace='nsMerchantDataExchange'
+    xmlns:mime='http://schemas.xmlsoap.org/wsdl/mime/'
+    xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'
+    xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/'
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xmlns:xsd='http://www.w3.org/2001/XMLSchema'
+    xmlns:ns0='http://idoox.com/wasp/tools/java2wsdl/output/java/util/'
+    xmlns:http='http://schemas.xmlsoap.org/wsdl/http/'
+    xmlns:tns="nsMerchantDataExchange"
+    xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'>
+
+    <wsdl:types>
+        <xsd:schema targetNamespace="nsMerchantDataExchange">
+
+        <!--                                                                        -->
+        <!-- types from Merchant-Integration                                        -->
+
+	<!-- Merchant -->
+        <xsd:complexType name="Merchant">
+            <xsd:sequence>
+	        <xsd:element name="merchantName" type="xsd:string"/>
+		<xsd:element name="merchantIdentifier" type="tns:MerchantIdentifier"/>
+            </xsd:sequence>	     
+        </xsd:complexType>
+
+	<!-- MerchantIdentifier -->
+	<xsd:simpleType name="MerchantIdentifier">
+ 	    <xsd:annotation>
+  		<xsd:documentation>Amazon.com provided Merchant identifier. This is the Merchant of record whose data is being exchanged.
+		</xsd:documentation>
+ 	    </xsd:annotation>
+	    <xsd:restriction base="xsd:string">
+		<xsd:maxLength value="20"/>
+	    </xsd:restriction>
+	</xsd:simpleType>
+
+	<!-- DocumentSubmissionResponse -->
+	<xsd:complexType name="DocumentSubmissionResponse">
+		<xsd:annotation>
+			<xsd:documentation>documentTransactionID is a unique identifier that is provided in response to a successful document transmission. This identifier represents a document submission transaction and may be subsequently used to get the processing report. 
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="documentTransactionID" type="tns:DocumentTransactionID"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!-- DocumenTransactionID -->
+	<xsd:simpleType name="DocumentTransactionID">
+		<xsd:restriction base="xsd:long"/>
+	</xsd:simpleType>
+
+	<!-- DocumentID -->
+	<xsd:simpleType name="DocumentID">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+
+	<!-- Fault -->
+	<xsd:complexType name="Fault">
+		<xsd:sequence>
+			<xsd:element name="faultcode" type="xsd:string"/>
+			<xsd:element name="faultdetail" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="faultstring" type="xsd:string"/>
+			<xsd:element name="faultactor" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!-- DocumentIDArray -->
+	<xsd:complexType name="DocumentIDArray" base="soap:Array">
+		<xsd:sequence>
+			<xsd:element name="item" type="tns:DocumentID"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+        <!-- StringArray -->
+	<xsd:complexType name="StringArray" base="soap:Array">
+		<xsd:sequence>
+			<xsd:element name="item" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+
+        <!--==================================================-->
+
+        <!-- DocumentIDDetails -->
+        <xsd:complexType name="DocumentIDDetails">
+            <xsd:sequence>
+                <xsd:element name="documentID" type="xsd:string"/>
+                <xsd:element name="documentDetails" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+
+	<!-- DocumentIDDetailsArray -->
+	<xsd:complexType name="DocumentIDDetailsArray" base="soap:Array">
+		<xsd:sequence>
+			<xsd:element name="item" type="tns:DocumentIDDetails"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!-- DocumentType -->
+        <xsd:complexType name="DocumentType">
+            <xsd:sequence>
+                <xsd:element name="DocumentTypeID" type="xsd:string"/>
+                <xsd:element name="DocumentTypeName" type="xsd:string"/>
+                <xsd:element name="DocumentTypeDescription" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+
+	<!-- ArrayOfDocumentType -->
+        <xsd:complexType name="ArrayOfDocumentType" base="soap:Array">
+            <xsd:sequence>
+                <xsd:element name="item" type="tns:DocumentType"/>
+            </xsd:sequence>
+        </xsd:complexType>
+
+	<!-- RelationshipCreationResponse -->
+        <xsd:complexType name="RelationshipCreationResponse">
+            <xsd:sequence>
+                <xsd:element name="producer" type="tns:Merchant"/>
+                <xsd:element name="receiver" type="tns:Merchant"/>
+            </xsd:sequence>
+        </xsd:complexType>
+
+	<!-- ProducerRegistrationResponse -->
+        <xsd:complexType name="ProducerRegistrationResponse">
+            <xsd:sequence>
+                <xsd:element name="producerID" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+
+	<!-- ReceiverRegistrationResponse -->
+        <xsd:complexType name="ReceiverRegistrationResponse">
+            <xsd:sequence>
+                <xsd:element name="receiverID" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+
+        </xsd:schema>
+    </wsdl:types>
+
+
+    <!-- registerProducer -->
+    <wsdl:message name='MerchantDataExchange_registerProducer_Request'>
+        <wsdl:part name='producer' type='tns:Merchant'/>
+	<wsdl:part name='email' type='xsd:string'/>
+    </wsdl:message>
+    <wsdl:message name='MerchantDataExchange_registerProducer_Response'>
+	<wsdl:part name='response' type='tns:ProducerRegistrationResponse'/>
+    </wsdl:message>    
+    <wsdl:message name='MerchantDataExchange_registerProducer_Fault'>
+	<wsdl:part name='response' type='tns:Fault'/>
+    </wsdl:message>
+
+    <!-- registerReceiver -->
+    <wsdl:message name='MerchantDataExchange_registerReceiver_Request'>
+	<wsdl:part name='receiver' type='tns:Merchant'/>
+	<wsdl:part name='email' type='xsd:string'/>
+    </wsdl:message>
+    <wsdl:message name='MerchantDataExchange_registerReceiver_Response'>
+        <wsdl:part name='response' type='tns:ReceiverRegistrationResponse'/>
+    </wsdl:message>
+    <wsdl:message name='MerchantDataExchange_registerReceiver_Fault'>
+	<wsdl:part name='response' type='tns:Fault'/>
+    </wsdl:message>
+
+    <!-- getAllDocumentTypes -->
+    <wsdl:message name='MerchantDataExchange_getAllDocumentTypes_Request'/>
+    <wsdl:message name='MerchantDataExchange_getAllDocumentTypes_Response'>
+	<wsdl:part name='response' type='tns:ArrayOfDocumentType'/>
+    </wsdl:message>
+    <wsdl:message name='MerchantDataExchange_getAllDocumentTypes_Fault'>
+	<wsdl:part name='response' type='tns:Fault'/>
+    </wsdl:message>
+
+    <!-- postDocumentWithDetails -->
+    <wsdl:message name='MerchantDataExchange_postDocumentWithDetails_Request'>
+        <wsdl:part name='producer' type='tns:Merchant'/>
+        <wsdl:part name='documentType' type='xsd:string'/>
+        <wsdl:part name='documentDetails' type='xsd:string'/>
+    </wsdl:message>
+    <wsdl:message name='MerchantDataExchange_postDocumentWithDetails_Response'>
+	<wsdl:part name='response' type='tns:DocumentSubmissionResponse'/>
+    </wsdl:message>
+    <wsdl:message name='MerchantDataExchange_postDocumentWithDetails_Fault'>
+	<wsdl:part name='response' type='tns:Fault'/>
+    </wsdl:message>
+
+    <!-- postDocumentForReceiverWithDetails -->
+    <wsdl:message name='MerchantDataExchange_postDocumentForReceiverWithDetails_Request'>
+        <wsdl:part name='producer' type='tns:Merchant'/>
+        <wsdl:part name='receiver' type='tns:Merchant'/>
+        <wsdl:part name='documentType' type='xsd:string'/>
+        <wsdl:part name='documentDetails' type='xsd:string'/>
+    </wsdl:message>
+    <wsdl:message name='MerchantDataExchange_postDocumentForReceiverWithDetails_Response'>
+	<wsdl:part name='response' type='tns:DocumentSubmissionResponse'/>
+    </wsdl:message>
+    <wsdl:message name='MerchantDataExchange_postDocumentForReceiverWithDetails_Fault'>
+	<wsdl:part name='response' type='tns:Fault'/>
+    </wsdl:message>
+
+    <!-- postDocumentForReceiver -->
+    <wsdl:message name='MerchantDataExchange_postDocumentForReceiver_Request'>
+        <wsdl:part name='producer' type='tns:Merchant'/>
+        <wsdl:part name='receiver' type='tns:Merchant'/>
+        <wsdl:part name='documentType' type='xsd:string'/>
+    </wsdl:message>
+    <wsdl:message name='MerchantDataExchange_postDocumentForReceiver_Response'>
+	<wsdl:part name='response' type='tns:DocumentSubmissionResponse'/>
+    </wsdl:message>
+    <wsdl:message name='MerchantDataExchange_postDocumentForReceiver_Fault'>
+	<wsdl:part name='response' type='tns:Fault'/>
+    </wsdl:message>
+
+    <!-- getDocumentWithDetails -->
+    <wsdl:message name="MerchantDataExchange_getDocumentWithDetails_Request">
+        <wsdl:part name="receiver" type="tns:Merchant"/>
+        <wsdl:part name="documentIdentifier" type="tns:DocumentID"/>
+    </wsdl:message>
+    <wsdl:message name="MerchantDataExchange_getDocumentWithDetails_Response">
+        <wsdl:part name="details" type="xsd:string"/>
+    </wsdl:message>
+    <wsdl:message name="MerchantDataExchange_getDocumentWithDetails_Fault">
+        <wsdl:part name="response" type="tns:Fault"/>
+    </wsdl:message>
+
+    <!-- createRelationshipWithDocTypes -->
+    <wsdl:message name='MerchantDataExchange_createRelationshipWithDocTypes_Request'>
+	<wsdl:part name='producer' type='tns:Merchant'/>
+	<wsdl:part name='receiver' type='tns:Merchant'/>
+	<wsdl:part name='documentTypes' type='tns:StringArray'/>
+    </wsdl:message>
+    <wsdl:message name='MerchantDataExchange_createRelationshipWithDocTypes_Response'>
+        <wsdl:part name='response' type='tns:RelationshipCreationResponse'/>
+    </wsdl:message>
+    <wsdl:message name='MerchantDataExchange_createRelationshipWithDocTypes_Fault'>
+	<wsdl:part name='response' type='Fault'/>
+    </wsdl:message>
+
+    <!-- getDocumentTypes -->
+    <wsdl:message name='MerchantDataExchange_getDocumentTypes_Request'>
+        <wsdl:part name='receiver' type='tns:Merchant'/>
+    </wsdl:message>
+    <wsdl:message name='MerchantDataExchange_getDocumentTypes_Response'>
+	<wsdl:part name='response' type='tns:ArrayOfDocumentType'/>
+    </wsdl:message>
+    <wsdl:message name='MerchantDataExchange_getDocumentTypes_Fault'>
+	<wsdl:part name='response' type='Fault'/>
+    </wsdl:message>
+
+    <!-- getPendingDocumentList -->
+    <wsdl:message name='MerchantDataExchange_getPendingDocumentList_Request'>
+	<wsdl:part name='receiver' type='tns:Merchant'/>
+	<wsdl:part name='documentType' type='xsd:string'/>
+	<wsdl:part name='beginDate' type='xsd:dateTime'/>
+	<wsdl:part name='endDate' type='xsd:dateTime'/>
+    </wsdl:message>
+    <wsdl:message name='MerchantDataExchange_getPendingDocumentList_Response'>
+        <wsdl:part name='response' type='tns:DocumentIDArray'/>
+    </wsdl:message>
+    <wsdl:message name='MerchantDataExchange_getPendingDocumentList_Fault'>
+	<wsdl:part name='response' type='Fault'/>
+    </wsdl:message>
+
+    <!-- getPendingDocumentListWithDetails -->
+    <wsdl:message name='MerchantDataExchange_getPendingDocumentListWithDetails_Request'>
+	<wsdl:part name='receiver' type='tns:Merchant'/>
+	<wsdl:part name='documentType' type='xsd:string'/>
+	<wsdl:part name='beginDate' type='xsd:dateTime'/>
+	<wsdl:part name='endDate' type='xsd:dateTime'/>
+    </wsdl:message>
+    <wsdl:message name='MerchantDataExchange_getPendingDocumentListWithDetails_Response'>
+        <wsdl:part name='response' type='tns:DocumentIDDetailsArray'/>
+    </wsdl:message>
+    <wsdl:message name='MerchantDataExchange_getPendingDocumentListWithDetails_Fault'>
+	<wsdl:part name='response' type='Fault'/>
+    </wsdl:message>
+
+    <!-- getLastNPendingDocumentList -->
+    <wsdl:message name='MerchantDataExchange_getLastNPendingDocumentList_Request'>
+	<wsdl:part name='receiver' type='tns:Merchant'/>
+	<wsdl:part name='documentType' type='xsd:string'/>
+        <wsdl:part name="howMany" type="xsd:int"/>
+    </wsdl:message>
+    <wsdl:message name='MerchantDataExchange_getLastNPendingDocumentList_Response'>
+        <wsdl:part name='response' type='tns:DocumentIDArray'/>
+    </wsdl:message>
+    <wsdl:message name='MerchantDataExchange_getLastNPendingDocumentList_Fault'>
+	<wsdl:part name='response' type='Fault'/>
+    </wsdl:message>
+
+    <!-- createDocumentType -->
+    <wsdl:message name='MerchantDataExchange_createDocumentType_Request'>
+	<wsdl:part name='name' type='xsd:string'/>
+	<wsdl:part name='description' type='xsd:string'/>
+    </wsdl:message>
+    <wsdl:message name='MerchantDataExchange_createDocumentType_Response'>
+        <wsdl:part name='response' type='tns:DocumentType'/>
+    </wsdl:message>
+    <wsdl:message name='MerchantDataExchange_createDocumentType_Fault'>
+	<wsdl:part name='response' type='Fault'/>
+    </wsdl:message>
+
+    <!-- getAllPendingDocumentList -->
+    <wsdl:message name='MerchantDataExchange_getAllPendingDocumentList_Request'>
+	<wsdl:part name='receiver' type='tns:Merchant'/>
+	<wsdl:part name='documentType' type='xsd:string'/>
+    </wsdl:message>
+    <wsdl:message name='MerchantDataExchange_getAllPendingDocumentList_Response'>
+        <wsdl:part name='response' type='tns:DocumentIDArray'/>
+    </wsdl:message>
+    <wsdl:message name='MerchantDataExchange_getAllPendingDocumentList_Fault'>
+	<wsdl:part name='response' type='Fault'/>
+    </wsdl:message>
+
+    <!-- getDocumentList -->
+    <wsdl:message name='MerchantDataExchange_getDocumentList_Request'>
+        <wsdl:part name='receiver' type='tns:Merchant'/>
+        <wsdl:part name='documentType' type='xsd:string'/>
+        <wsdl:part name='beginDate' type='xsd:dateTime'/>
+        <wsdl:part name='endDate' type='xsd:dateTime'/>
+    </wsdl:message>
+    <wsdl:message name='MerchantDataExchange_getDocumentList_Response'>
+        <wsdl:part name='response' type='tns:DocumentIDArray'/>
+    </wsdl:message>
+    <wsdl:message name='MerchantDataExchange_getDocumentList_Fault'>
+	<wsdl:part name='response' type='Fault'/>
+    </wsdl:message>
+
+    <!-- getDocumentListWithDetails -->
+    <wsdl:message name='MerchantDataExchange_getDocumentListWithDetails_Request'>
+        <wsdl:part name='receiver' type='tns:Merchant'/>
+        <wsdl:part name='documentType' type='xsd:string'/>
+        <wsdl:part name='beginDate' type='xsd:dateTime'/>
+        <wsdl:part name='endDate' type='xsd:dateTime'/>
+    </wsdl:message>
+    <wsdl:message name='MerchantDataExchange_getDocumentListWithDetails_Response'>
+        <wsdl:part name='response' type='tns:DocumentIDDetailsArray'/>
+    </wsdl:message>
+    <wsdl:message name='MerchantDataExchange_getDocumentListWithDetails_Fault'>
+	<wsdl:part name='response' type='Fault'/>
+    </wsdl:message>
+
+    <!-- getLastNDocumentList -->
+    <wsdl:message name='MerchantDataExchange_getLastNDocumentList_Request'>
+        <wsdl:part name='receiver' type='tns:Merchant'/>
+        <wsdl:part name='documentType' type='xsd:string'/>
+        <wsdl:part name="howMany" type="xsd:int"/>
+    </wsdl:message>
+    <wsdl:message name='MerchantDataExchange_getLastNDocumentList_Response'>
+        <wsdl:part name='response' type='tns:DocumentIDArray'/>
+    </wsdl:message>
+    <wsdl:message name='MerchantDataExchange_getLastNDocumentList_Fault'>
+	<wsdl:part name='response' type='Fault'/>
+    </wsdl:message>
+
+    <!-- createRelationship -->
+    <wsdl:message name='MerchantDataExchange_createRelationship_Request'>
+        <wsdl:part name='producer' type='tns:Merchant'/>
+        <wsdl:part name='receiver' type='tns:Merchant'/>
+    </wsdl:message>
+    <wsdl:message name='MerchantDataExchange_createRelationship_Response'>
+        <wsdl:part name='response' type='tns:RelationshipCreationResponse'/>
+    </wsdl:message>
+    <wsdl:message name='MerchantDataExchange_createRelationship_Fault'>
+	<wsdl:part name='response' type='Fault'/>
+    </wsdl:message>
+
+
+    <!-- Port type-->
+    <wsdl:portType name='MerchantDataExchange'>
+
+        <wsdl:operation name='createRelationship' parameterOrder='producer receiver'>
+            <wsdl:input name='createRelationship' message='tns:MerchantDataExchange_createRelationship_Request'/>
+            <wsdl:output name='createRelationship' message='tns:MerchantDataExchange_createRelationship_Response'/>
+        </wsdl:operation>
+
+        <wsdl:operation name='createDocumentType' parameterOrder='name description'>
+            <wsdl:input name='createDocumentType' message='tns:MerchantDataExchange_createDocumentType_Request'/>
+            <wsdl:output name='createDocumentType' message='tns:MerchantDataExchange_createDocumentType_Response'/>
+        </wsdl:operation>
+
+        <wsdl:operation name='getDocumentList' parameterOrder='receiver documentType beginDate endDate'>
+            <wsdl:input name='getDocumentList' message='tns:MerchantDataExchange_getDocumentList_Request'/>
+            <wsdl:output name='getDocumentList' message='tns:MerchantDataExchange_getDocumentList_Response'/>
+        </wsdl:operation>
+
+        <wsdl:operation name='getDocumentListWithDetails' parameterOrder='receiver documentType beginDate endDate'>
+            <wsdl:input name='getDocumentListWithDetails' message='tns:MerchantDataExchange_getDocumentListWithDetails_Request'/>
+            <wsdl:output name='getDocumentListWithDetails' message='tns:MerchantDataExchange_getDocumentListWithDetails_Response'/>
+        </wsdl:operation>
+
+        <wsdl:operation name='getLastNDocumentList' parameterOrder='receiver documentType howMany'>
+            <wsdl:input name='getLastNDocumentList' message='tns:MerchantDataExchange_getLastNDocumentList_Request'/>
+            <wsdl:output name='getLastNDocumentList' message='tns:MerchantDataExchange_getLastNDocumentList_Response'/>
+        </wsdl:operation>
+
+        <wsdl:operation name='getAllDocumentTypes'>
+            <wsdl:input name='getAllDocumentTypes' message='tns:MerchantDataExchange_getAllDocumentTypes_Request'/>
+            <wsdl:output name='getAllDocumentTypes' message='tns:MerchantDataExchange_getAllDocumentTypes_Response'/>
+        </wsdl:operation>
+
+        <wsdl:operation name='createRelationshipWithDocTypes' parameterOrder='producer receiver documentTypes'>
+            <wsdl:input name='createRelationshipWithDocTypes' message='tns:MerchantDataExchange_createRelationshipWithDocTypes_Request'/>
+            <wsdl:output name='createRelationshipWithDocTypes' message='tns:MerchantDataExchange_createRelationshipWithDocTypes_Response'/>
+        </wsdl:operation>
+
+        <wsdl:operation name='registerProducer' parameterOrder='producer email'>
+            <wsdl:input name='registerProducer' message='tns:MerchantDataExchange_registerProducer_Request'/>
+            <wsdl:output name='registerProducer' message='tns:MerchantDataExchange_registerProducer_Response'/>
+        </wsdl:operation>
+
+        <wsdl:operation name='registerReceiver' parameterOrder='receiver email'>
+            <wsdl:input name='registerReceiver' message='tns:MerchantDataExchange_registerReceiver_Request'/>
+            <wsdl:output name='registerReceiver' message='tns:MerchantDataExchange_registerReceiver_Response'/>
+        </wsdl:operation>
+
+        <wsdl:operation name='getAllPendingDocumentList' parameterOrder='receiver documentType'>
+            <wsdl:input name='getAllPendingDocumentList' message='tns:MerchantDataExchange_getAllPendingDocumentList_Request'/>
+            <wsdl:output name='getAllPendingDocumentList' message='tns:MerchantDataExchange_getAllPendingDocumentList_Response'/>
+        </wsdl:operation>
+
+        <wsdl:operation name='postDocumentWithDetails' parameterOrder='producer documentType documentDetails'>
+            <wsdl:input name='postDocumentWithDetails' message='tns:MerchantDataExchange_postDocumentWithDetails_Request'/>
+            <wsdl:output name='postDocumentWithDetails' message='tns:MerchantDataExchange_postDocumentWithDetails_Response'/>
+        </wsdl:operation>
+
+        <wsdl:operation name='postDocumentForReceiverWithDetails' parameterOrder='producer receiver documentType documentDetails'>
+            <wsdl:input name='postDocumentForReceiverWithDetails' message='tns:MerchantDataExchange_postDocumentForReceiverWithDetails_Request'/>
+            <wsdl:output name='postDocumentForReceiverWithDetails' message='tns:MerchantDataExchange_postDocumentForReceiverWithDetails_Response'/>
+        </wsdl:operation>
+
+        <wsdl:operation name='postDocumentForReceiver' parameterOrder='producer receiver documentType'>
+            <wsdl:input name='postDocumentForReceiver' message='tns:MerchantDataExchange_postDocumentForReceiver_Request'/>
+            <wsdl:output name='postDocumentForReceiver' message='tns:MerchantDataExchange_postDocumentForReceiver_Response'/>
+        </wsdl:operation>
+
+        <wsdl:operation name="getDocumentWithDetails" parameterOrder="receiver documentIdentifier">
+            <wsdl:input name="getDocumentWithDetails" message="tns:MerchantDataExchange_getDocumentWithDetails_Request"/>
+            <wsdl:output name="getDocumentWithDetails" message="tns:MerchantDataExchange_getDocumentWithDetails_Response"/>
+        </wsdl:operation>
+
+
+        <wsdl:operation name='getPendingDocumentList' parameterOrder='receiver documentType beginDate endDate'>
+            <wsdl:input name='getPendingDocumentList' message='tns:MerchantDataExchange_getPendingDocumentList_Request'/>
+            <wsdl:output name='getPendingDocumentList' message='tns:MerchantDataExchange_getPendingDocumentList_Response'/>
+        </wsdl:operation> 
+
+        <wsdl:operation name='getPendingDocumentListWithDetails' parameterOrder='receiver documentType beginDate endDate'>
+            <wsdl:input name='getPendingDocumentListWithDetails' message='tns:MerchantDataExchange_getPendingDocumentListWithDetails_Request'/>
+            <wsdl:output name='getPendingDocumentListWithDetails' message='tns:MerchantDataExchange_getPendingDocumentListWithDetails_Response'/>
+        </wsdl:operation> 
+
+        <wsdl:operation name='getLastNPendingDocumentList' parameterOrder='receiver documentType howMany'>
+            <wsdl:input name='getLastNPendingDocumentList' message='tns:MerchantDataExchange_getLastNPendingDocumentList_Request'/>
+            <wsdl:output name='getLastNPendingDocumentList' message='tns:MerchantDataExchange_getLastNPendingDocumentList_Response'/>
+        </wsdl:operation> 
+
+        <wsdl:operation name='getDocumentTypes' parameterOrder='receiver'>
+            <wsdl:input name='getDocumentTypes' message='tns:MerchantDataExchange_getDocumentTypes_Request'/>
+            <wsdl:output name='getDocumentTypes' message='tns:MerchantDataExchange_getDocumentTypes_Response'/>
+        </wsdl:operation>
+
+    </wsdl:portType>
+
+
+    <wsdl:binding name='MerchantDataExchange' type='tns:MerchantDataExchange'>
+
+        <soap:binding transport='http://schemas.xmlsoap.org/soap/http' style='rpc'/>
+
+        <wsdl:operation name='createRelationship'>
+            <soap:operation soapAction='' style='rpc'/>
+            <wsdl:input name='createRelationship'>
+                <soap:body use='encoded' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' namespace='nsMerchantDataExchange'/>
+            </wsdl:input>
+            <wsdl:output name='createRelationship'>
+                <soap:body use='encoded' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' namespace='nsMerchantDataExchange'/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name='createDocumentType'>
+            <soap:operation soapAction='' style='rpc'/>
+            <wsdl:input name='createDocumentType'>
+                <soap:body use='encoded' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' namespace='nsMerchantDataExchange'/>
+            </wsdl:input>
+            <wsdl:output name='createDocumentType'>
+                <soap:body use='encoded' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' namespace='nsMerchantDataExchange'/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name='getDocumentList'>
+            <soap:operation soapAction='' style='rpc'/>
+            <wsdl:input name='getDocumentList'>
+                <soap:body use='encoded' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' namespace='nsMerchantDataExchange'/>
+            </wsdl:input>
+            <wsdl:output name='getDocumentList'>
+                <soap:body use='encoded' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' namespace='nsMerchantDataExchange'/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name='getDocumentListWithDetails'>
+            <soap:operation soapAction='' style='rpc'/>
+            <wsdl:input name='getDocumentListWithDetails'>
+                <soap:body use='encoded' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' namespace='nsMerchantDataExchange'/>
+            </wsdl:input>
+            <wsdl:output name='getDocumentListWithDetails'>
+                <soap:body use='encoded' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' namespace='nsMerchantDataExchange'/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name='getLastNDocumentList'>
+            <soap:operation soapAction='' style='rpc'/>
+            <wsdl:input name='getLastNDocumentList'>
+                <soap:body use='encoded' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' namespace='nsMerchantDataExchange'/>
+            </wsdl:input>
+            <wsdl:output name='getLastNDocumentList'>
+                <soap:body use='encoded' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' namespace='nsMerchantDataExchange'/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name='getAllDocumentTypes'>
+            <soap:operation soapAction='' style='rpc'/>
+            <wsdl:input name='getAllDocumentTypes'>
+                <soap:body use='encoded' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' namespace='nsMerchantDataExchange'/>
+            </wsdl:input>
+            <wsdl:output name='getAllDocumentTypes'>
+                <soap:body use='encoded' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' namespace='nsMerchantDataExchange'/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name='createRelationshipWithDocTypes'>
+            <soap:operation soapAction='' style='rpc'/>
+            <wsdl:input name='createRelationshipWithDocTypes'>
+                <soap:body use='encoded' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' namespace='nsMerchantDataExchange'/>
+            </wsdl:input>
+            <wsdl:output name='createRelationshipWithDocTypes'>
+                <soap:body use='encoded' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' namespace='nsMerchantDataExchange'/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name='registerProducer'>
+            <soap:operation soapAction='' style='rpc'/>
+            <wsdl:input name='registerProducer'>
+                <soap:body use='encoded' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' namespace='nsMerchantDataExchange'/>
+            </wsdl:input>
+            <wsdl:output name='registerProducer'>
+                <soap:body use='encoded' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' namespace='nsMerchantDataExchange'/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name='registerReceiver'>
+            <soap:operation soapAction='' style='rpc'/>
+            <wsdl:input name='registerReceiver'>
+                <soap:body use='encoded' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' namespace='nsMerchantDataExchange'/>
+            </wsdl:input>
+            <wsdl:output name='registerReceiver'>
+                <soap:body use='encoded' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' namespace='nsMerchantDataExchange'/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name='getAllPendingDocumentList'>
+            <soap:operation soapAction='' style='rpc'/>
+            <wsdl:input name='getAllPendingDocumentList'>
+                <soap:body use='encoded' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' namespace='nsMerchantDataExchange'/>
+            </wsdl:input>
+            <wsdl:output name='getAllPendingDocumentList'>
+                <soap:body use='encoded' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' namespace='nsMerchantDataExchange'/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name='postDocumentWithDetails'>
+            <soap:operation soapAction='' style='rpc'/>
+            <wsdl:input name='postDocumentWithDetails'>
+                 <soap:body use='encoded' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' namespace='nsMerchantDataExchange'/>
+            </wsdl:input>
+            <wsdl:output name='postDocumentWithDetails'>
+                <soap:body use='encoded' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' namespace='nsMerchantDataExchange'/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name='postDocumentForReceiverWithDetails'>
+            <soap:operation soapAction='' style='rpc'/>
+            <wsdl:input name='postDocumentForReceiverWithDetails'>
+                 <soap:body use='encoded' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' namespace='nsMerchantDataExchange'/>
+            </wsdl:input>
+            <wsdl:output name='postDocumentForReceiverWithDetails'>
+                <soap:body use='encoded' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' namespace='nsMerchantDataExchange'/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name='postDocumentForReceiver'>
+            <soap:operation soapAction='' style='rpc'/>
+            <wsdl:input name='postDocumentForReceiver'>
+                 <soap:body use='encoded' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' namespace='nsMerchantDataExchange'/>
+            </wsdl:input>
+            <wsdl:output name='postDocumentForReceiver'>
+                <soap:body use='encoded' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' namespace='nsMerchantDataExchange'/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name="getDocumentWithDetails">
+            <soap:operation soapAction="" style="rpc"/>
+            <wsdl:input name="getDocumentWithDetails">
+                <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="nsMerchantDataExchange"/>
+            </wsdl:input>
+            <wsdl:output name="getDocumentWithDetails">
+              	<soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace='nsMerchantDataExchange'/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name='getPendingDocumentList'>
+            <soap:operation soapAction='' style='rpc'/>
+            <wsdl:input name='getPendingDocumentList'>
+                <soap:body use='encoded' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' namespace='nsMerchantDataExchange'/>
+            </wsdl:input>
+            <wsdl:output name='getPendingDocumentList'>
+                <soap:body use='encoded' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' namespace='nsMerchantDataExchange'/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name='getPendingDocumentListWithDetails'>
+            <soap:operation soapAction='' style='rpc'/>
+            <wsdl:input name='getPendingDocumentListWithDetails'>
+                <soap:body use='encoded' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' namespace='nsMerchantDataExchange'/>
+            </wsdl:input>
+            <wsdl:output name='getPendingDocumentListWithDetails'>
+                <soap:body use='encoded' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' namespace='nsMerchantDataExchange'/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name='getLastNPendingDocumentList'>
+            <soap:operation soapAction='' style='rpc'/>
+            <wsdl:input name='getLastNPendingDocumentList'>
+                <soap:body use='encoded' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' namespace='nsMerchantDataExchange'/>
+            </wsdl:input>
+            <wsdl:output name='getLastNPendingDocumentList'>
+                <soap:body use='encoded' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' namespace='nsMerchantDataExchange'/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name='getDocumentTypes'>
+            <soap:operation soapAction='' style='rpc'/>
+            <wsdl:input name='getDocumentTypes'>
+                <soap:body use='encoded' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' namespace='nsMerchantDataExchange'/>
+            </wsdl:input>
+            <wsdl:output name='getDocumentTypes'>
+                <soap:body use='encoded' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' namespace='nsMerchantDataExchange'/>
+            </wsdl:output>
+        </wsdl:operation>
+
+    </wsdl:binding>
+
+
+    <wsdl:service name='JavaService'>
+        <wsdl:port name='MerchantDataExchange' binding='tns:MerchantDataExchange'>
+            <soap:address location='urn:unknown-location-uri'/>
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>
