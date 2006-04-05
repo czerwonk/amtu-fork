@@ -1,12 +1,8 @@
 @echo off
-echo Installing AMT as Windows Service.
-call InstallAMT.bat
 
-echo Installing Monitor as Windows Service.
+echo Installing Services
+call InstallAMT.bat
 call InstallMonitor.bat
 
-echo Starting Monitor
+echo Starting Services
 net start AMT_Monitor
-
-echo Starting AMT
-net start AMT
