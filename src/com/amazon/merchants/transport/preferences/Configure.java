@@ -318,13 +318,13 @@ public class Configure
 		while (!done)
 		{
 			System.out.println("Adding account details");
-			if (!hasMIP && TextMenuUtil.promptYesNo("Do you require a MIP (Merchant Integration Platform) account for testing?",false))
+			if (!hasMIP && TextMenuUtil.promptYesNo("Do you have a MIP (Merchant Integration Platform) account for testing?",false))
 			{
 				hasMIP = true;
 				addOrModifyAccount(config,"mip",false);
 			}
 					
-			if (!hasProd && TextMenuUtil.promptYesNo("Do you require a Production account at this time?",false))
+			if (!hasProd && TextMenuUtil.promptYesNo("Do you have a Production account at this time?",false))
 			{
 				hasProd = true;
 				addOrModifyAccount(config,"production",false);
