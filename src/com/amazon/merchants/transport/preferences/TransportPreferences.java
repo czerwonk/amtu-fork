@@ -15,9 +15,9 @@ import com.amazon.merchants.transport.logging.AuditLogger;
 
 /**
  * Copyright 2004 Amazon.com
- * 
+ *
  * Description:
- * 
+ *
  * @author hynoskij
  *
  */
@@ -25,18 +25,18 @@ public class TransportPreferences
 {
 	private static final TransportPreferences _instance = new TransportPreferences();
 	private Preferences preferences;
-	private static final Log log = LogFactory.getLog(TransportPreferences.class);	
-	
+	private static final Log log = LogFactory.getLog(TransportPreferences.class);
+
 	public static final TransportPreferences instance()
 	{
 		return _instance;
 	}
-	
+
 	private TransportPreferences()
 	{
 		preferences = Preferences.systemNodeForPackage(TransportPreferences.class);
 	}
-	
+
 	public void putPreference(TransportPreferenceEnum key, String value)
 	{
 		preferences.put(key.getName(),value);
@@ -86,7 +86,7 @@ public class TransportPreferences
 	{
 		return preferences.getBoolean(key.getName(),Boolean.getBoolean(key.getDefaultValue()));
 	}
-	
+
 	public void store(TransportConfiguration config)
 	{
 		preferences.put(TransportPreferenceEnum.TRANSPORT_ROOT_FOLDER.getName(),config.getRootFolder());
@@ -97,14 +97,15 @@ public class TransportPreferences
 		preferences.putInt(TransportPreferenceEnum.RETRIEVER_REPORT_TIMEOUT.getName(),config.getProcReportTimeoutMinutes());
 		preferences.putInt(TransportPreferenceEnum.RETRIEVER_POST_TIMEOUT_POLL_INTERVAL.getName(),config.getProcReportPostTimeoutIntervalMinutes());
 		preferences.putBoolean(TransportPreferenceEnum.IS_FLATFILE.getName(),config.isFlatFile());
-		
+		preferences.put(TransportPreferenceEnum.SERVER_LOCATIONS.getName(), config.getServerLocations());
+
 		preferences.putInt(TransportPreferenceEnum.MONITOR_SEND_PORT.getName(),config.getMonitorSendPort());
 		preferences.putInt(TransportPreferenceEnum.MONITOR_RECEIVE_PORT.getName(),config.getMonitorReceivePort());
 		preferences.put(TransportPreferenceEnum.MONITOR_RECEIVE_HOST.getName(),config.getMonitorReceiveHost());
 		preferences.put(TransportPreferenceEnum.MONITOR_SMTP_SERVER.getName(),config.getMonitorSMTPServer());
 		preferences.put(TransportPreferenceEnum.MONITOR_NOTIFY_EMAIL.getName(),config.getMonitorNotifyEmail());
-		
-		UserAccountPreferences.instance().storeAll(config.getAccounts());		
+
+		UserAccountPreferences.instance().storeAll(config.getAccounts());
 	}
 
 	public TransportConfiguration getConfig()
@@ -118,16 +119,17 @@ public class TransportPreferences
 		config.setProcReportTimeoutMinutes(preferences.getInt(TransportPreferenceEnum.RETRIEVER_REPORT_TIMEOUT.getName(),Integer.parseInt(TransportPreferenceEnum.RETRIEVER_REPORT_TIMEOUT.getDefaultValue())));
 		config.setProcReportPostTimeoutIntervalMinutes(preferences.getInt(TransportPreferenceEnum.RETRIEVER_POST_TIMEOUT_POLL_INTERVAL.getName(),Integer.parseInt(TransportPreferenceEnum.RETRIEVER_POST_TIMEOUT_POLL_INTERVAL.getDefaultValue())));
 		config.setFlatFile(preferences.getBoolean(TransportPreferenceEnum.IS_FLATFILE.getName(),Boolean.getBoolean(TransportPreferenceEnum.IS_FLATFILE.getDefaultValue())));
+		config.setServerLocations(preferences.get(TransportPreferenceEnum.SERVER_LOCATIONS.getName(), TransportPreferenceEnum.SERVER_LOCATIONS.getDefaultValue()));
 
 		config.setMonitorSendPort(preferences.getInt(TransportPreferenceEnum.MONITOR_SEND_PORT.getName(),Integer.parseInt(TransportPreferenceEnum.MONITOR_SEND_PORT.getDefaultValue())));
 		config.setMonitorReceivePort(preferences.getInt(TransportPreferenceEnum.MONITOR_RECEIVE_PORT.getName(),Integer.parseInt(TransportPreferenceEnum.MONITOR_RECEIVE_PORT.getDefaultValue())));
 		config.setMonitorReceiveHost(preferences.get(TransportPreferenceEnum.MONITOR_RECEIVE_HOST.getName(),TransportPreferenceEnum.MONITOR_RECEIVE_HOST.getDefaultValue()));
 		config.setMonitorSMTPServer(preferences.get(TransportPreferenceEnum.MONITOR_SMTP_SERVER.getName(),TransportPreferenceEnum.MONITOR_SMTP_SERVER.getDefaultValue()));
 		config.setMonitorNotifyEmail(preferences.get(TransportPreferenceEnum.MONITOR_NOTIFY_EMAIL.getName(),TransportPreferenceEnum.MONITOR_NOTIFY_EMAIL.getDefaultValue()));
-		return config;		
+		return config;
 	}
 
-	
+
 	public void reload()
 	{
 		try
@@ -137,21 +139,21 @@ public class TransportPreferences
 		catch (BackingStoreException bex)
 		{
 			log.debug(ExceptionUtils.getFullStackTrace(bex));
-			AuditLogger.instance().logSeriousError("Could not read preferences."); 
+			AuditLogger.instance().logSeriousError("Could not read preferences.");
 		}
 	}
 
 	public boolean preferencesExist()
-	{		
+	{
 		if (preferences==null ||
 		    preferences.get(TransportPreferenceEnum.TRANSPORT_ROOT_FOLDER.getName(),null)==null)
 		{
 			return false;
 		}
-		
+
 		return true;
 	}
-	
+
 	public void removeAll()
 	{
 		try

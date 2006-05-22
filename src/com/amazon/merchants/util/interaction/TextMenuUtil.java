@@ -109,7 +109,7 @@ public class TextMenuUtil
 			if (StringUtils.isNumeric(readVal) && !"".equals(readVal))
 			{
 				int value = Integer.parseInt(readVal);
-				if (value < 0 || value > choices.length)
+				if (value <= 0 || value > choices.length)
 				{
 					System.out.println("Please only enter a value between 1 and "+choices.length);
 				}

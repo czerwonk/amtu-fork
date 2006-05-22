@@ -8,9 +8,9 @@ import org.apache.commons.lang.enum.Enum;
 
 /**
  * Copyright 2004 Amazon.com
- * 
+ *
  * Description:
- * 
+ *
  * @author hynoskij
  *
  */
@@ -30,7 +30,7 @@ public class TransportPreferenceEnum extends Enum
 	// Retriever Specific Preferences
 	public static final TransportPreferenceEnum RETRIEVER_REPORT_TIMEOUT=new TransportPreferenceEnum("retriever.timeout","60");
 	public static final TransportPreferenceEnum RETRIEVER_POST_TIMEOUT_POLL_INTERVAL=new TransportPreferenceEnum("retriever.postTimeoutPoll","60");
-		
+
 	// Monitor Specific Preferences
 	public static final TransportPreferenceEnum MONITOR_SEND_PORT=new TransportPreferenceEnum("transport.monitor.send.port", "13131");
 	public static final TransportPreferenceEnum MONITOR_RECEIVE_PORT=new TransportPreferenceEnum("transport.monitor.receive.port", "13132");
@@ -41,6 +41,7 @@ public class TransportPreferenceEnum extends Enum
 	// URL default preference keys
 	public static final TransportPreferenceEnum MIP_DEFAULT_URL=new TransportPreferenceEnum("mip.user.url", "");
 	public static final TransportPreferenceEnum PRODUCTION_DEFAULT_URL=new TransportPreferenceEnum("production.user.url", "");
+	public static final TransportPreferenceEnum SERVER_LOCATIONS=new TransportPreferenceEnum("server.locations", "");
 
 	/**
 	 * @param arg0
@@ -52,7 +53,7 @@ public class TransportPreferenceEnum extends Enum
 	}
 
 	public static TransportPreferenceEnum getEnum(String code) {
-	  TransportPreferenceEnum enum = (TransportPreferenceEnum) getEnum(TransportPreferenceEnum.class, code); 
+	  TransportPreferenceEnum enum = (TransportPreferenceEnum) getEnum(TransportPreferenceEnum.class, code);
 	  return enum;
 	}
 

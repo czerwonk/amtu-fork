@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Properties;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.amazon.merchants.transport.model.MerchantAccount;
 import com.amazon.merchants.transport.util.TransportPingUtility;
 import com.amazon.merchants.util.ConfigResource;
@@ -44,13 +46,13 @@ public class Configure
 			    isWS=true;
 			}
 		}
-	
+
 		System.out.println("Amazon Merchant Transport Tool Configuration Utility v0.1"+(isAdvanced?" Advanced Mode":""));
 		System.out.println("----------------------------------------------------"+(isAdvanced?"--------------":""));
 		System.out.println();
 		System.out.println("Values in square brackets [] are defaults. To select these, just press Enter.");
 		System.out.println();
-		
+
 		if (preferences.preferencesExist())
 		{
 			configure.updateConfiguration(preferences,isAdvanced);
@@ -62,7 +64,7 @@ public class Configure
 		System.out.println();
 		System.out.println("Exiting Application");
 	}
-	
+
 	public void initialConfiguration(TransportPreferences preferences, boolean isAdvanced)
 	{
 		System.out.println("Initial Configuration and Setup");
@@ -74,13 +76,19 @@ public class Configure
 			while(e.hasMoreElements())
 			{
 				String key = (String)e.nextElement();
-				preferences.putPreference(TransportPreferenceEnum.getEnum(key),defaultPreferences.getProperty(key));
+				TransportPreferenceEnum tpEnum =
+					TransportPreferenceEnum.getEnum(key);
+				if (tpEnum != null)
+				{
+					preferences.putPreference(tpEnum,
+							defaultPreferences.getProperty(key));
+				}
 			}
-			
+
 			TransportConfiguration config = preferences.getConfig();
-			
-			setGlobals(config);
-			
+
+			setGlobals(config, preferences);
+
 			if (isAdvanced)
 			{
 				while(TextMenuUtil.promptYesNo("Would you like to add a new account?",false))
@@ -88,7 +96,7 @@ public class Configure
 					addOrModifyAccount(config,TextMenuUtil.promptAndValidate("Enter a unique name for environment","production",InputTypeEnum.STRING),isAdvanced);
 				}
 			}
-			
+
 			else
 			{
 				addStandardAccounts(config);
@@ -104,16 +112,16 @@ public class Configure
 		catch (IOException iox)
 		{
 			System.out.println("Could not open default preferences file due to "+iox.getMessage());
-		}	
+		}
 	}
 
 	public void updateConfiguration(TransportPreferences preferences, boolean isAdvanced)
 	{
 		TransportConfiguration config = preferences.getConfig();
 		int choice=99;
-		
+
 		do
-		{	
+		{
 			ArrayList options = new ArrayList();
 			options.add("Exit configuration utility");
 			options.add("View/Modify application preferences");
@@ -121,11 +129,11 @@ public class Configure
 			options.add("Remove a configuration account");
 			options.add("Add a configuration account");
 			options.add("Add Amazon Web Services Information");
-			
+
 			switch(choice=TextMenuUtil.promptChoice("What would you like to do?",0,((String []) options.toArray(new String[0]))))
 			{
 				case 1:
-					setGlobals(config);
+					setGlobals(config, preferences);
 					break;
 				case 2:
 					modifyAccount(config,isAdvanced);
@@ -151,8 +159,8 @@ public class Configure
 
 		} while (choice > 0);
 	}
-	
-	private void setGlobals(TransportConfiguration config)
+
+	private void setGlobals(TransportConfiguration config, TransportPreferences preferences)
 	{
 		// Transport Root Folder
 		File workingDir = new File(System.getProperty("user.dir"));
@@ -167,9 +175,11 @@ public class Configure
 		// Monitor Notify Email Address
 		config.setMonitorNotifyEmail(TextMenuUtil.promptAndValidate("Enter an email address that will be used for application status notifications",config.getMonitorNotifyEmail()==null?"":config.getMonitorNotifyEmail(),InputTypeEnum.EMAIL));
 		// Monitor Notify SMTP Server
-		config.setMonitorSMTPServer(TextMenuUtil.promptAndValidate("Enter the address of your smtp mail server (ask your mail administrator if you do not know what this is)",config.getMonitorSMTPServer()==null?"mail":config.getMonitorSMTPServer(),InputTypeEnum.DOMAIN));		
+		config.setMonitorSMTPServer(TextMenuUtil.promptAndValidate("Enter the address of your smtp mail server (ask your mail administrator if you do not know what this is)",config.getMonitorSMTPServer()==null?"mail":config.getMonitorSMTPServer(),InputTypeEnum.DOMAIN));
+		// Set Server URL
+		this.setServerLocationPrefs(config, preferences);
 	}
-	
+
 	private void addOrModifyAccount(TransportConfiguration config, String environmentName, boolean isAdvanced)
 	{
 		boolean done;
@@ -220,10 +230,10 @@ public class Configure
 				done = TextMenuUtil.promptYesNo("Would you like to save account configuration and continue anyway?",false);
 			}
 			config.addAccount(account);
-			
+
 		} while (!done);
 	}
-	
+
 	private void removeAccount()
 	{
 		try
@@ -244,7 +254,7 @@ public class Configure
 			System.out.println("No accounts found");
 		}
 	}
-	
+
 	private void modifyAccount(TransportConfiguration config, boolean isAdvanced)
 	{
 		try
@@ -264,7 +274,7 @@ public class Configure
 			System.out.println("No accounts found");
 		}
 	}
-	
+
 	private static void deinstall()
 	{
 		try
@@ -281,12 +291,12 @@ public class Configure
 		}
 		TransportPreferences.instance().removeAll();
 	}
-	
+
 	private void addStandardAccounts(TransportConfiguration config)
 	{
 		boolean hasMIP=false;
 		boolean hasProd=false;
-		
+
 		try
 		{
 			String [] envs = UserAccountPreferences.instance().getEnvironments();
@@ -306,13 +316,13 @@ public class Configure
 			}
 		}
 		catch (PreferencesException pex){}
-		
+
 		if (hasMIP && hasProd)
 		{
 			System.out.println("You already have both MIP and Production accounts. Either edit existing accounts or remove one to be able to add.");
 			return;
 		}
-	
+
 		boolean done=false;
 
 		while (!done)
@@ -323,7 +333,7 @@ public class Configure
 				hasMIP = true;
 				addOrModifyAccount(config,"mip",false);
 			}
-					
+
 			if (!hasProd && TextMenuUtil.promptYesNo("Do you have a Production account at this time?",false))
 			{
 				hasProd = true;
@@ -331,6 +341,44 @@ public class Configure
 			}
 			// If they didnt add any accounts, make sure this is right.
 			done = hasMIP||hasProd?true:TextMenuUtil.promptYesNo("You have not entered any account details which means the tool will not run. Are you sure this is what you want to do?",false);
-		}		
+		}
+	}
+
+	private void setServerLocationPrefs(
+			TransportConfiguration config,
+			TransportPreferences prefs)
+	{
+		String[] serverLocations =
+			StringUtils.stripAll(
+					StringUtils.split(config.getServerLocations(), ","));
+
+		int choice = TextMenuUtil.promptChoice("Choose your Amazon SOAP Server location",
+				0 , (serverLocations == null || serverLocations.length == 0) ?
+						(new String[] {"US"}) : serverLocations);
+		String selectedServerLocation = serverLocations[choice];
+
+		Properties serverLocationProps = new Properties();
+		try
+		{
+			serverLocationProps.load(new ConfigResource("serverConfig_"
+					+ selectedServerLocation + ".properties").inputStream());
+			Enumeration e = serverLocationProps.keys();
+			while(e.hasMoreElements())
+			{
+				String key = (String)e.nextElement();
+				TransportPreferenceEnum tpEnum =
+					TransportPreferenceEnum.getEnum(key);
+				if (tpEnum != null)
+				{
+					prefs.putPreference(TransportPreferenceEnum.getEnum(key),
+						serverLocationProps.getProperty(key));
+				}
+			}
+		}
+		catch (IOException iox)
+		{
+			System.out.println("Could not open server config preferences file due to "
+					+ iox.getMessage());
+		}
 	}
 }

@@ -12,9 +12,9 @@ import com.amazon.merchants.transport.model.MerchantAccount;
 
 /**
  * Copyright 2004 Amazon.com
- * 
+ *
  * Description:
- * 
+ *
  * @author hynoskij
  *
  */
@@ -30,7 +30,8 @@ public class TransportConfiguration
 	private int procReportTimeoutMinutes;
 	private int procReportPostTimeoutIntervalMinutes;
 	private boolean flatFile;
-	
+	private String serverLocations;
+
 	// Monitor Preferences
 	private int monitorSendPort;
 	private int monitorReceivePort;
@@ -40,12 +41,12 @@ public class TransportConfiguration
 	private String accessKey;
 	private String secretAccessKey;
 
-	
+
 	public void addAccount(MerchantAccount account)
 	{
 		accounts.put(account.getEnvironmentName(),account);
 	}
-	
+
 	public void removeAccount(MerchantAccount account)
 	{
 		accounts.remove(account.getEnvironmentName());
@@ -60,12 +61,12 @@ public class TransportConfiguration
 	{
 		return accounts.values();
 	}
-	
+
 	public Iterator getAccountsIterator()
 	{
 		return accounts.values().iterator();
 	}
-		
+
 	/**
 	 * @return
 	 */
@@ -272,9 +273,9 @@ public class TransportConfiguration
 	{
 		monitorSMTPServer = string;
 	}
-	
+
 	/**
-	 * @return: 
+	 * @return:
 	 * @ pcn
 	 */
 	public String getaccessKey()
@@ -292,6 +293,16 @@ public class TransportConfiguration
 	public void setsecretAccessKey (String accessKey)
 	{
 	    this.secretAccessKey = secretAccessKey;
+	}
+
+	public void setServerLocations(String serverLocations)
+	{
+		this.serverLocations = serverLocations;
+	}
+
+	public String getServerLocations()
+	{
+		return this.serverLocations;
 	}
 
 }
