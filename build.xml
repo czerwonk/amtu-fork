@@ -96,7 +96,11 @@
 		<delete file="${tar.file.name}" />
 	</target>
 
-	<target name="backup" depends="compile">
+	<target name="_cleanWSClient">
+		<delete dir="${src.dir}/${wsdl.pkg.name}" />
+	</target>
+
+	<target name="backup">
 		<mkdir dir="${backup.dir}" />
 		<tstamp>
 			<format property="NOW" pattern="yyyy-MM-dd-HH-mm" />
