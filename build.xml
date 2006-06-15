@@ -96,30 +96,4 @@
 		<delete file="${tar.file.name}" />
 	</target>
 
-	<target name="_cleanWSClient">
-		<delete dir="${src.dir}/${wsdl.pkg.name}" />
-	</target>
-
-	<target name="backup">
-		<mkdir dir="${backup.dir}" />
-		<tstamp>
-			<format property="NOW" pattern="yyyy-MM-dd-HH-mm" />
-		</tstamp>
-		<tar destfile="${backup.dir}/${backup.file}.tar">
-			<tarfileset dir="." mode="755">
-				<exclude name="${build.dir}/**" />
-				<exclude name="${backup.dir}/**" />
-				<exclude name=".project" />
-				<exclude name=".classpath" />
-			</tarfileset>
-		</tar>
-		<gzip zipfile="${backup.dir}/${backup.file}-${NOW}.tar.gz" src="${backup.dir}/${backup.file}.tar" />
-		<checksum file="${backup.dir}/${backup.file}-${NOW}.tar.gz"/>
-		<copy todir="${backup.remote.dir}">
-			<fileset file="${backup.dir}/${backup.file}-${NOW}.tar.gz" />
-			<fileset file="${backup.dir}/${backup.file}-${NOW}.tar.gz.MD5" />
-		</copy>
-		<delete dir="${backup.dir}" />
-	</target>
-
 </project>
