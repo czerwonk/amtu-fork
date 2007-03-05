@@ -30,7 +30,7 @@ public class TransportMain
 			ReflectionException,
             AttributeNotFoundException
 	{
-		System.setProperty("transport.appversion", "_amtu1.0.3_");
+		System.setProperty("transport.appversion", "_amtu1.0.7_");
 
 		if (!TransportPreferences.instance().preferencesExist())
 		{
@@ -39,13 +39,13 @@ public class TransportMain
 		}
 		Properties log4jProps = new Properties();
 		log4jProps.load(new ConfigResource("log4j.properties").inputStream());
-		
+
 		//Different log files based on monitor mode or not...
 		if(args[0].equalsIgnoreCase("monitor"))
 			setupLogPaths(log4jProps,"moni_");
 		else
 			setupLogPaths(log4jProps,"amtu_");
-			
+
 		PropertyConfigurator.configure(log4jProps);
 
 		if (args[0].equalsIgnoreCase("monitor"))
@@ -98,7 +98,7 @@ public class TransportMain
 		String defAudit = logDirectory + logNamePrefix + "def_audit.log";
 		String defError = logDirectory + logNamePrefix + "def_error.log";
 	    String curLog;
-		
+
 		//Only be explicit about the pathing if there is no pathing already specified
 		//in the existing properties file
 		curLog = log4jProps.getProperty("log4j.appender.debugLog.File");
@@ -110,7 +110,7 @@ public class TransportMain
 		else
 			curLog = defDebug;
 		log4jProps.put("log4j.appender.debugLog.File",curLog);
-		
+
 		curLog = log4jProps.getProperty("log4j.appender.auditLog.File");
 		if(curLog.length() > 0)
 		{
