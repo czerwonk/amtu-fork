@@ -1,7 +1,10 @@
 Changes:
 
+1.0.7
+Added M@ JP end point.
+
 1.0.2
-Fixed issue with occasional failure of password retrieval from preferences
+Fixed issue with occasional failure of password retrieval from preferences.
 
 1.0.1
 Fixed issue where hsqldb connection could not be established due to multiple opening and closing
