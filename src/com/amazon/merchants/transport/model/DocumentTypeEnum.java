@@ -11,9 +11,9 @@ import java.util.Map;
 
 /**
  * Copyright 2004 Amazon.com
- * 
+ *
  * Description:
- * 
+ *
  * @author hynoskij
  *
  */
@@ -24,6 +24,7 @@ public class DocumentTypeEnum extends MerchantDocumentEnum  implements Serializa
 	public static final DocumentTypeEnum ADJUSTMENT = new DocumentTypeEnum("PAYMENT_ADJUSTMENT","_POST_PAYMENT_ADJUSTMENT_DATA_","_POST_FLAT_FILE_PAYMENT_ADJUSTMENT_DATA_",90);
 	public static final DocumentTypeEnum FULFILLMENT = new DocumentTypeEnum("FULFILLMENT","_POST_ORDER_FULFILLMENT_DATA_","_POST_FLAT_FILE_FULFILLMENT_DATA_",80);
 	public static final DocumentTypeEnum TEST_ORDER = new DocumentTypeEnum("TEST_ORDER","_POST_TEST_ORDERS_DATA_","_POST_FLAT_FILE_TEST_ORDER_DATA_",60);
+	public static final DocumentTypeEnum ORDER_CANCELLATION = new DocumentTypeEnum("ORDER_CANCELLATION","_POST_ORDER_ACKNOWLEDGEMENT_DATA_","_POST_FLAT_FILE_ORDER_ACKNOWLEDGEMENT_DATA_",75);
 
 	// XML only types
 	public static final DocumentTypeEnum RELATIONSHIP = new DocumentTypeEnum("PRODUCT_RELATIONSHIP","_POST_PRODUCT_RELATIONSHIP_DATA_",30);
@@ -36,6 +37,8 @@ public class DocumentTypeEnum extends MerchantDocumentEnum  implements Serializa
     public static final DocumentTypeEnum ACES = new DocumentTypeEnum("ACES","_POST_ACES_DATA_",300);
     public static final DocumentTypeEnum PIES = new DocumentTypeEnum("PIES","_POST_PIES_DATA_",400);
     public static final DocumentTypeEnum ITEM = new DocumentTypeEnum("ITEM","_POST_ITEM_DATA_",500);
+    public static final DocumentTypeEnum STD_ACES = new DocumentTypeEnum("STD_ACES","_POST_STD_ACES_DATA_",600);
+    public static final DocumentTypeEnum STD_PIES = new DocumentTypeEnum("STD_PIES","_POST_STD_PIES_DATA_",700);
 
 	private int feedPrecedence;
 
@@ -54,19 +57,19 @@ public class DocumentTypeEnum extends MerchantDocumentEnum  implements Serializa
 	{
 		this(name,xmlCode,null, precedence);
 	}
-	
+
 	public static DocumentTypeEnum getEnum(String documentType) {
 	  return (DocumentTypeEnum) getEnum(DocumentTypeEnum.class, documentType);
 	}
- 
+
 	public static Map getEnumMap() {
 	  return getEnumMap(DocumentTypeEnum.class);
 	}
- 
+
 	public static List getEnumList() {
 	  return getEnumList(DocumentTypeEnum.class);
 	}
- 
+
 	public static Iterator iterator() {
 	  return iterator(DocumentTypeEnum.class);
 	}
@@ -75,7 +78,7 @@ public class DocumentTypeEnum extends MerchantDocumentEnum  implements Serializa
 	 */
 	public int compareTo(Object arg0)
 	{
-		return feedPrecedence - ((DocumentTypeEnum)arg0).getFeedPrecedence(); 
+		return feedPrecedence - ((DocumentTypeEnum)arg0).getFeedPrecedence();
 	}
 
 	/**
