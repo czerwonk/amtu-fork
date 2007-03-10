@@ -30,7 +30,7 @@ public class TransportMain
 			ReflectionException,
             AttributeNotFoundException
 	{
-		System.setProperty("transport.appversion", "_amtu1.0.7_");
+		System.setProperty("transport.appversion", "_amtu1.0.8_");
 
 		if (!TransportPreferences.instance().preferencesExist())
 		{

@@ -1,5 +1,8 @@
 Changes:
 
+1.0.8
+Added support for 'OrderCancellation' and 'ACES&PIES' feeds.
+
 1.0.7
 Added M@ JP end point.
 
