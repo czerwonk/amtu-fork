@@ -12,6 +12,7 @@ import java.util.Enumeration;
 import java.util.Properties;
 import java.util.StringTokenizer;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 
 import com.amazon.merchants.transport.TransportConstants;
@@ -19,7 +20,6 @@ import com.amazon.merchants.transport.dispatcher.FileIdentifier;
 import com.amazon.merchants.transport.dispatcher.InvalidDocumentException;
 import com.amazon.merchants.transport.model.DocumentTypeEnum;
 import com.amazon.merchants.util.*;
-import com.amazon.merchants.util.Str;
 import com.amazon.merchants.util.file.FileUtil;
 
 /**
@@ -136,11 +136,40 @@ public class FileContentIdentifier implements FileIdentifier
 		// a product file, as other TemplateTypes are already checked.
 		if (fileType.equals(TransportConstants.FLAT_FILE_SUFFIX))
 		{
+			// Check if this is a SHOPZILLA feed
+			if (isShopzillaFeed(header)) {
+				return "txt.SHOPZILLA";
+			}
+			
 			if (new Str(header).indexOfIgnoreCase("TemplateType=") == 0)
 			{
 				return "txt.PRODUCT";
 			}
 		}
 		throw new InvalidDocumentException("Document cannot be recognized as a valid Amazon document");
+	}
+	
+	private boolean isShopzillaFeed(final String header) {
+		
+		if (new Str(header).indexOfIgnoreCase("TemplateType=Shopzilla") == 0) {
+			return true;
+		}
+		
+		if (new Str(header).indexOfIgnoreCase("TemplateType=") == 0) {
+			return false;
+		}
+		
+		String[] shopzillaRequiredColumms = StringUtils.stripAll(
+				StringUtils.split(lookup.getProperty("txt.SHOPZILLA"), ",")); 
+			
+		if (shopzillaRequiredColumms == null || shopzillaRequiredColumms.length == 0) 
+			throw new IllegalArgumentException("Cannot find 'Shopzilla' in file 'contentIdentifierStrings.properties'");		
+		
+		for (int i = 0; i < shopzillaRequiredColumms.length; i++) {
+			if (! StringUtils.contains(header, shopzillaRequiredColumms[i])) {
+				return false;
+			}
+		}
+		return true;	
 	}
 }
