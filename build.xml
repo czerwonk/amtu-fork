@@ -12,7 +12,7 @@
 		<delete dir="${build.dir}" />
 	</target>
 
-	<target name="_init">
+	<target name="_init" depends="clean">
 		<mkdir dir="${build.dir}" />
 		<mkdir dir="${build.lib.dir}" />
 		<mkdir dir="${classes.dir}" />
@@ -56,7 +56,7 @@
 		<javadoc destdir="${javadoc.dir}">
 			<fileset dir="${src.dir}" />
 		</javadoc>
-	</target>
+	</target>	
 
 	<target name="_copyDist" depends="_init">
 		<copy todir="${build.dist.dir}">
@@ -64,7 +64,7 @@
 				<exclude name="**/*.txt" />
 				<exclude name="**/*.zip" />
 			</fileset>
-		</copy>
+		</copy>		
 		<copy todir="${build.dist.dir}">
 			<fileset dir="${os.installation.dir}" />
 		</copy>
