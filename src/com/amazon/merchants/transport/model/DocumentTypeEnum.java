@@ -25,7 +25,8 @@ public class DocumentTypeEnum extends MerchantDocumentEnum  implements Serializa
 	public static final DocumentTypeEnum FULFILLMENT = new DocumentTypeEnum("FULFILLMENT","_POST_ORDER_FULFILLMENT_DATA_","_POST_FLAT_FILE_FULFILLMENT_DATA_",80);
 	public static final DocumentTypeEnum TEST_ORDER = new DocumentTypeEnum("TEST_ORDER","_POST_TEST_ORDERS_DATA_","_POST_FLAT_FILE_TEST_ORDER_DATA_",60);
 	public static final DocumentTypeEnum ORDER_CANCELLATION = new DocumentTypeEnum("ORDER_CANCELLATION","_POST_ORDER_ACKNOWLEDGEMENT_DATA_","_POST_FLAT_FILE_ORDER_ACKNOWLEDGEMENT_DATA_",75);
-
+	public static final DocumentTypeEnum SHOPZILLA = new DocumentTypeEnum("SHOPZILLA","_POST_PRODUCT_DATA_","_POST_FLAT_FILE_SHOPZILLA_DATA_",15);
+	
 	// XML only types
 	public static final DocumentTypeEnum RELATIONSHIP = new DocumentTypeEnum("PRODUCT_RELATIONSHIP","_POST_PRODUCT_RELATIONSHIP_DATA_",30);
 	public static final DocumentTypeEnum OVERRIDES = new DocumentTypeEnum("OVERRIDES","_POST_PRODUCT_OVERRIDES_DATA_",60);
