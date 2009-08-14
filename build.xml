@@ -29,7 +29,7 @@
 	</target>
 
 	<target name="compile" depends="_init, wsdl2java">
-		<javac destdir="${classes.dir}" srcdir="${src.dir}" debug="${compile.debug}" fork="yes" classpathref="compile.classpath" />
+		<javac destdir="${classes.dir}" srcdir="${src.dir}" debug="${compile.debug}" fork="yes" classpathref="compile.classpath" target="1.4" source="1.4" />
 	</target>
 
 	<target name="_copySourceForDebug" />
