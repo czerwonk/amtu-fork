@@ -2,25 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="dist/service/lib/wrapper.jar"/>
-	<classpathentry kind="lib" path="installation/bsd/service/lib/wrapper.jar"/>
-	<classpathentry kind="lib" path="installation/linux/service/lib/wrapper.jar"/>
-	<classpathentry kind="lib" path="installation/windows/jre/javaws/javaws-l10n.jar"/>
-	<classpathentry kind="lib" path="installation/windows/jre/javaws/javaws.jar"/>
-	<classpathentry kind="lib" path="installation/windows/jre/lib/charsets.jar"/>
-	<classpathentry kind="lib" path="installation/windows/jre/lib/ext/dnsns.jar"/>
-	<classpathentry kind="lib" path="installation/windows/jre/lib/ext/ldapsec.jar"/>
-	<classpathentry kind="lib" path="installation/windows/jre/lib/ext/localedata.jar"/>
-	<classpathentry kind="lib" path="installation/windows/jre/lib/ext/sunjce_provider.jar"/>
-	<classpathentry kind="lib" path="installation/windows/jre/lib/im/indicim.jar"/>
-	<classpathentry kind="lib" path="installation/windows/jre/lib/im/thaiim.jar"/>
-	<classpathentry kind="lib" path="installation/windows/jre/lib/jce.jar"/>
-	<classpathentry kind="lib" path="installation/windows/jre/lib/jsse.jar"/>
-	<classpathentry kind="lib" path="installation/windows/jre/lib/plugin.jar"/>
-	<classpathentry kind="lib" path="installation/windows/jre/lib/rt.jar"/>
-	<classpathentry kind="lib" path="installation/windows/jre/lib/security/local_policy.jar"/>
-	<classpathentry kind="lib" path="installation/windows/jre/lib/security/US_export_policy.jar"/>
-	<classpathentry kind="lib" path="installation/windows/jre/lib/sunrsasign.jar"/>
-	<classpathentry kind="lib" path="installation/windows/service/lib/wrapper.jar"/>
 	<classpathentry kind="lib" path="lib/activation.jar"/>
 	<classpathentry kind="lib" path="lib/axis-ant.jar"/>
 	<classpathentry kind="lib" path="lib/axis.jar"/>
