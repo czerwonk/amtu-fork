@@ -24,7 +24,8 @@ import com.amazon.merchants.transport.logging.AuditLogger;
  */
 public class TransportPreferences {
 
-    private static final TransportPreferences _instance = new TransportPreferences();
+    private static TransportPreferences _instance;
+    private static final Object lock = new Object();
     private final ITransportConfigurationStore configuration;
     private static final Log log = LogFactory.getLog(TransportPreferences.class);
 
@@ -35,9 +36,18 @@ public class TransportPreferences {
 
     
     public static final TransportPreferences instance() {
+        if (_instance == null) {
+            synchronized(lock) {
+                if (_instance == null) {
+                    _instance = new TransportPreferences();
+                    _instance.reload();
+                }
+            }        
+        }
+        
         return _instance;
     }
-    
+        
     public void putPreference(TransportPreferenceEnum key, String value) {
         this.configuration.putString(key.getName(), value);
     }
