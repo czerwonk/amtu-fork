@@ -8,6 +8,7 @@ import java.util.Properties;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.amazon.merchants.DependencyInjectionManager;
 import com.amazon.merchants.transport.model.MerchantAccount;
 import com.amazon.merchants.transport.util.TransportPingUtility;
 import com.amazon.merchants.util.ConfigResource;
@@ -23,6 +24,8 @@ public class Configure
 
     public static void main(String[] args)
 	{
+        DependencyInjectionManager.registerInstance(ITransportConfigurationStore.class, new PreferencesTransportConfigurationStore());
+        
 		Configure configure = new Configure();
 		boolean isAdvanced=false;
 		TransportPreferences preferences = TransportPreferences.instance();

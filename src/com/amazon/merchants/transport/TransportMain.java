@@ -8,6 +8,7 @@ import javax.management.*;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.PropertyConfigurator;
 
+import com.amazon.merchants.DependencyInjectionManager;
 import com.amazon.merchants.transport.preferences.*;
 import com.amazon.merchants.transport.util.TransportDirectoryUtil;
 import com.amazon.merchants.util.ConfigResource;
@@ -31,6 +32,8 @@ public class TransportMain
             AttributeNotFoundException
 	{
 		System.setProperty("transport.appversion", "_amtu1.0.8_");
+		
+		DependencyInjectionManager.registerInstance(ITransportConfigurationStore.class, new PreferencesTransportConfigurationStore());
 
 		if (!TransportPreferences.instance().preferencesExist())
 		{
